@@ -1,0 +1,46 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <title>ROS 2 Architecture Diagram</title>
+  <desc>Diagram showing the core components of ROS 2 architecture including nodes, topics, services, and the DDS/RMW layer</desc>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#f8f9fa"/>
+
+  <!-- Title -->
+  <text x="400" y="40" font-family="Arial" font-size="20" text-anchor="middle" fill="#2c3e50">ROS 2 Architecture</text>
+
+  <!-- DDS/RMW Layer -->
+  <rect x="100" y="300" width="600" height="80" fill="#e3f2fd" stroke="#1976d2" stroke-width="2" rx="10"/>
+  <text x="400" y="345" font-family="Arial" font-size="16" text-anchor="middle" fill="#1976d2">DDS/RMW Layer</text>
+  <text x="400" y="365" font-family="Arial" font-size="12" text-anchor="middle" fill="#555">Data Distribution Service / ROS Middleware</text>
+
+  <!-- Node A -->
+  <rect x="120" y="100" width="160" height="100" fill="#c8e6c9" stroke="#388e3c" stroke-width="2" rx="10"/>
+  <text x="200" y="130" font-family="Arial" font-size="14" text-anchor="middle" fill="#2e7d32">Node A</text>
+  <text x="200" y="150" font-family="Arial" font-size="12" text-anchor="middle" fill="#2e7d32">Publisher</text>
+
+  <!-- Node B -->
+  <rect x="320" y="100" width="160" height="100" fill="#c8e6c9" stroke="#388e3c" stroke-width="2" rx="10"/>
+  <text x="400" y="130" font-family="Arial" font-size="14" text-anchor="middle" fill="#2e7d32">Node B</text>
+  <text x="400" y="150" font-family="Arial" font-size="12" text-anchor="middle" fill="#2e7d32">Subscriber</text>
+
+  <!-- Node C -->
+  <rect x="520" y="100" width="160" height="100" fill="#c8e6c9" stroke="#388e3c" stroke-width="2" rx="10"/>
+  <text x="600" y="130" font-family="Arial" font-size="14" text-anchor="middle" fill="#2e7d32">Node C</text>
+  <text x="600" y="150" font-family="Arial" font-size="12" text-anchor="middle" fill="#2e7d32">Service Server</text>
+
+  <!-- Topic -->
+  <rect x="300" y="220" width="200" height="40" fill="#fff3e0" stroke="#f57c00" stroke-width="2" rx="5"/>
+  <text x="400" y="245" font-family="Arial" font-size="12" text-anchor="middle" fill="#e65100">Topic: /sensor_data</text>
+
+  <!-- Arrows -->
+  <line x1="200" y1="200" x2="400" y2="220" stroke="#2196f3" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="400" y1="200" x2="400" y2="220" stroke="#2196f3" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="550" y1="200" x2="450" y2="220" stroke="#2196f3" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Arrow marker definition -->
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#2196f3"/>
+    </marker>
+  </defs>
+</svg>

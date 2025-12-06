@@ -1,0 +1,297 @@
+---
+title: 'Isaac Sim 2025 Installation and Setup'
+description: 'Step-by-step guide to installing and configuring NVIDIA Isaac Sim 2025'
+tags: [intermediate, isaac, setup, installation, configuration]
+sidebar_position: 2
+---
+
+# Isaac Sim 2025 Installation and Setup
+
+<DifficultyIndicator level="intermediate" />
+
+<PersonalizationPanel
+  initialSettings={{
+    difficultyFilter: 'intermediate',
+    learningPath: 'practical',
+    showAdvancedContent: false,
+    showSimplifiedExplanations: true,
+    includeAdditionalExamples: true,
+    highlightKeyConcepts: true
+  }}
+  studentProfile={{
+    skillLevel: 'intermediate',
+    preferredLearningPath: 'practical'
+  }}
+/>
+
+This guide provides detailed instructions for installing and configuring NVIDIA Isaac Sim 2025. Isaac Sim is a powerful simulation environment for robotics development built on NVIDIA Omniverse technology.
+
+## System Requirements
+
+Before installing Isaac Sim, ensure your system meets the following requirements:
+
+### Hardware Requirements
+- **GPU**: NVIDIA RTX 4070 Ti, RTX 4080, RTX 4090, RTX 6000 Ada, RTX A6000, RTX A5000, RTX A4000 or better
+- **VRAM**: Minimum 12GB, 24GB+ recommended for complex scenes
+- **CPU**: Multi-core processor (Intel i7-10700K or AMD Ryzen 7 3700X or better)
+- **RAM**: 32GB minimum, 64GB recommended
+- **Storage**: 20GB free space for Isaac Sim + additional space for assets
+- **Display**: 1920x1080 minimum resolution
+
+### Software Requirements
+- **OS**: Ubuntu 22.04 LTS (as specified in curriculum)
+- **NVIDIA Driver**: 535.0 or later (for Isaac Sim 2025)
+- **CUDA**: 12.0 or later
+- **Python**: 3.10 (compatible with ROS 2 Kilted Kaiju)
+
+## Pre-Installation Checks
+
+Before proceeding, verify your system configuration:
+
+```bash
+# Check NVIDIA driver version
+nvidia-smi
+
+# Check CUDA version
+nvcc --version
+
+# Check Ubuntu version
+lsb_release -a
+
+# Verify GPU is detected
+lspci | grep -i nvidia
+```
+
+## Isaac Sim Installation
+
+### Method 1: Download from NVIDIA Developer Portal (Recommended)
+
+1. **Create an NVIDIA Developer Account**
+   - Go to [developer.nvidia.com](https://developer.nvidia.com)
+   - Register for a free account if you don't have one
+   - Navigate to the Isaac Sim page
+
+2. **Download Isaac Sim 2025**
+   - Select the Ubuntu 22.04 version
+   - Download the `.run` installer file
+   - The file will be named similar to `isaac-sim-2025.1.0-ubuntu22.04-release.run`
+
+3. **Make the Installer Executable**
+   ```bash
+   chmod +x isaac-sim-*.run
+   ```
+
+4. **Run the Installer**
+   ```bash
+   sudo ./isaac-sim-*.run
+   ```
+
+5. **Follow the Installation Wizard**
+   - Accept the license agreement
+   - Choose installation directory (default: `/isaac-sim`)
+   - Select components to install (recommended: all components)
+
+### Method 2: Using Isaac Sim Docker Container (Alternative)
+
+If you prefer using Docker for isolation:
+
+```bash
+# Pull the Isaac Sim Docker image
+docker pull nvcr.io/nvidia/isaac-sim:2025.1.0
+
+# Run Isaac Sim with GPU support
+xhost +local:docker
+docker run --gpus all -it --rm \
+  --network=host \
+  --env="DISPLAY" \
+  --env="QT_X11_NO_MITSHM=1" \
+  --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
+  --volume="/home/$USER:/workspace:rw" \
+  --volume="/dev/shm:/dev/shm" \
+  --privileged \
+  nvcr.io/nvidia/isaac-sim:2025.1.0
+```
+
+## Post-Installation Configuration
+
+### 1. Environment Setup
+
+Add Isaac Sim to your environment by adding these lines to your `~/.bashrc`:
+
+```bash
+# Isaac Sim Environment
+export ISAACSIM_PATH="/isaac-sim"  # Adjust path if installed elsewhere
+export ISAACSIM_PYTHON_PATH="$ISAACSIM_PATH/python.sh"
+export ISAACSIM_NUCLEUS_SERVER_URI="omniverse://localhost/Nucleus"
+```
+
+Then source your bashrc:
+```bash
+source ~/.bashrc
+```
+
+### 2. Verify Installation
+
+Test the installation by launching Isaac Sim:
+
+```bash
+# Launch Isaac Sim GUI
+$ISAACSIM_PATH/isaac-sim.launch.sh
+```
+
+If successful, the Isaac Sim Omniverse application should start with the default scene.
+
+### 3. ROS 2 Bridge Setup
+
+To enable ROS 2 integration:
+
+```bash
+# Navigate to Isaac Sim directory
+cd $ISAACSIM_PATH
+
+# Verify ROS 2 bridge is available
+ls -la python/omni.isaac.ros2_bridge*
+
+# Source ROS 2 environment
+source /opt/ros/rolling/setup.bash
+
+# Set ROS_DOMAIN_ID for Isaac Sim (optional)
+export ROS_DOMAIN_ID=1
+```
+
+## Isaac Sim Configuration for Robotics
+
+### 1. Omniverse Nucleus Setup
+
+For single-user development (default setup):
+
+1. Launch Isaac Sim
+2. Go to Window → Extension Manager
+3. Search for "Nucleus" extensions
+4. Enable Omniverse Nucleus Client
+5. Configure to use local Nucleus server
+
+### 2. Physics Settings
+
+For realistic humanoid robot simulation:
+
+1. Go to Window → Physics → Physics Settings
+2. Set Gravity to -9.81 m/s² (Z-axis)
+3. Adjust solver settings for accuracy vs. performance:
+   - Solver Type: TGS
+   - Position Iterations: 4-8
+   - Velocity Iterations: 1
+
+### 3. USD Stage Setup
+
+Isaac Sim uses USD (Universal Scene Description) for scene representation:
+
+1. Create a new stage (Ctrl+N)
+2. Save as a new USD file (.usd extension)
+3. Set up layers for different components (robot, environment, etc.)
+
+## Common Installation Issues and Solutions
+
+### Issue 1: "No CUDA-capable device is detected"
+- **Symptoms**: Isaac Sim fails to start with CUDA errors
+- **Solution**: Verify NVIDIA drivers are properly installed and GPU is detected
+  ```bash
+  nvidia-smi
+  # If GPU not listed, reinstall NVIDIA drivers
+  sudo apt install nvidia-driver-535
+  sudo reboot
+  ```
+
+### Issue 2: "Display not found" when launching GUI
+- **Symptoms**: Isaac Sim fails to start GUI with display errors
+- **Solution**: Ensure X11 forwarding is enabled if using SSH, or run locally
+  ```bash
+  # Check display
+  echo $DISPLAY
+  # Should return something like ":0" or "localhost:10.0"
+  ```
+
+### Issue 3: "Omniverse connection failed"
+- **Symptoms**: Cannot connect to Omniverse services
+- **Solution**: For local development, configure to use local Nucleus server
+  - Go to Window → Omniverse → Connection
+  - Set server to "http://localhost:3080"
+
+### Issue 4: Performance issues with complex scenes
+- **Symptoms**: Slow rendering or physics simulation
+- **Solution**: Adjust quality settings in Isaac Sim
+  - Go to Window → Stage → USD Stage Viewport
+  - Reduce rendering quality for development
+  - Use proxy representations for complex models
+
+## Testing Your Installation
+
+### Basic Test
+1. Launch Isaac Sim: `$ISAACSIM_PATH/isaac-sim.launch.sh`
+2. Create a new stage (Ctrl+N)
+3. Add a primitive cube (Window → Create → Primitive → Cube)
+4. Verify physics by adding a ground plane and enabling physics
+5. Run the simulation and observe the cube falling
+
+### ROS 2 Integration Test
+1. Create a simple scene with a cube
+2. Enable ROS 2 bridge extension
+3. Verify ROS 2 topics are available in Isaac Sim
+4. Test communication with external ROS 2 nodes
+
+## Optimizing for Your Hardware
+
+### For RTX 4070 Ti (12GB VRAM)
+- Keep scene complexity moderate
+- Use proxy representations during scene setup
+- Reduce viewport quality during development
+- Close other GPU-intensive applications
+
+### Performance Settings
+- **Viewport Quality**: Medium for development, High for final renders
+- **Physics Substeps**: 1-2 for real-time simulation, higher for accuracy
+- **Multi-Viewport**: Disable if not needed
+
+## Next Steps
+
+Once Isaac Sim is installed and configured, proceed to the next section to learn about simulation concepts and physics. Then, complete the hands-on lab exercise to create your first simulation environment and connect it with ROS 2.
+
+<LabExercise
+  title="Isaac Sim Installation Verification Lab"
+  objectives={[
+    "Verify Isaac Sim installation is successful",
+    "Launch and navigate the Isaac Sim interface",
+    "Create a basic simulation scene",
+    "Verify ROS 2 bridge functionality"
+  ]}
+  prerequisites={[
+    "Isaac Sim installed and configured",
+    "ROS 2 Kilted Kaiju installed",
+    "NVIDIA GPU with compatible drivers"
+  ]}
+  steps={[
+    "Launch Isaac Sim and verify the application starts without errors",
+    "Create a new USD stage and add basic primitives",
+    "Enable physics and test a simple falling object",
+    "Open the Extension Manager and verify ROS 2 Bridge is available",
+    "Check that ROS 2 environment is properly sourced"
+  ]}
+  expectedOutcome="Isaac Sim launches successfully and basic functionality is verified"
+  troubleshootingTips={[
+    "If Isaac Sim fails to launch, check GPU drivers and CUDA installation",
+    "If ROS 2 bridge is not available, verify ROS 2 environment is sourced",
+    "If physics simulation is not working, check physics settings"
+  ]}
+/>
+
+## Troubleshooting Resources
+
+- **NVIDIA Isaac Sim Documentation**: [docs.omniverse.nvidia.com](https://docs.omniverse.nvidia.com/isaacsim/latest/index.html)
+- **NVIDIA Developer Forums**: For community support
+- **System Requirements Checker**: Use the Isaac Sim system compatibility tool
+
+## Summary
+
+In this section, you've successfully installed and configured NVIDIA Isaac Sim 2025, which is essential for simulating humanoid robots. You've learned about the system requirements, installation process, and configuration steps needed to get Isaac Sim working with your ROS 2 environment.
+
+The next section will dive into the theoretical concepts behind physics simulation and digital twins, building on this practical installation work.

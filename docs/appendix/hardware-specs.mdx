@@ -1,0 +1,266 @@
+---
+title: 'Hardware Specifications and Recommendations'
+description: 'Detailed hardware recommendations with exact 2025 prices and model numbers'
+tags: [hardware, specifications, recommendations, pricing, setup]
+sidebar_position: 3
+---
+
+# Hardware Specifications and Recommendations
+
+<DifficultyIndicator level="beginner" />
+
+This document provides detailed hardware recommendations for the Physical AI & Humanoid Robotics course, including exact 2025 prices and model numbers. All recommendations are based on realistic student hardware requirements and optimized for the Ubuntu 22.04 + ROS 2 Kilted Kaiju + NVIDIA Isaac Sim 2025 environment.
+
+## Primary Computing Platform
+
+### Recommended: NVIDIA Jetson Orin Nano Super Developer Kit
+- **Model**: Jetson Orin Nano Super Developer Kit
+- **Price (2025)**: $249.00
+- **Specifications**:
+  - 2.0 GHz ARM A78AE (ARM v8.2) 6-core processor
+  - 1024-core NVIDIA Ampere™ architecture GPU
+  - 8GB LPDDR5 memory
+  - 512GB eMMC 5.1 storage
+  - 2x 22-pin expansion headers
+  - 40-pin GPIO header compatible with Raspberry Pi
+  - Stereo camera connector
+  - Power-over-Ethernet (PoE+) capable
+- **Why Recommended**:
+  - Optimized for AI workloads and robotics applications
+  - Perfect for running Isaac Sim and ROS 2 in embedded scenarios
+  - Energy efficient for mobile robotics applications
+  - Cost-effective for educational purposes
+  - Strong ROS 2 support and community resources
+
+### Alternative Computing Options
+
+#### High-Performance Alternative: NVIDIA Jetson AGX Orin
+- **Model**: Jetson AGX Orin Developer Kit
+- **Price (2025)**: $1,499.00
+- **Specifications**:
+  - 12-core NVIDIA Carmel ARM v8.2 64-bit CPU
+  - 2048-core NVIDIA Ampere architecture GPU
+  - 32GB LPDDR5 memory
+  - 64GB eMMC storage
+- **Trade-offs**: More powerful but significantly more expensive; better for advanced research
+
+#### Budget Alternative: Intel NUC with Discrete GPU
+- **Model**: Intel NUC 12 Pro Kit (NUC12WSHJ)
+- **Price (2025)**: $299.00 + $299.00 (RTX 4060 Mobile GPU) = $598.00 total
+- **Specifications**:
+  - Intel Core i5-1240P Processor (12 cores, 16 threads)
+  - Up to 64GB DDR4-3200 RAM
+  - PCIe Gen 4.0 x4 slot for discrete GPU
+  - M.2 2280 slot for SSD storage
+- **Trade-offs**: More versatile for general computing, but less optimized for robotics; requires separate GPU purchase
+
+## Robot Platforms
+
+### Primary Recommendation: Unitree G1 Humanoid Robot
+- **Model**: Unitree G1 Humanoid Robot
+- **Price (2025)**: $16,000.00
+- **Specifications**:
+  - 32 DOF (Degrees of Freedom)
+  - 1.1m height, 13.2kg weight
+  - Max speed: 3.2 m/s
+  - Max load: 10kg
+  - Advanced perception system (cameras, IMUs, force/torque sensors)
+  - Battery life: 1 hour continuous operation
+  - ROS 2 compatibility
+  - SDK for custom control and AI integration
+- **Why Recommended**:
+  - Most accessible humanoid platform for educational use
+  - Comprehensive SDK and documentation
+  - Proven reliability in research environments
+  - Strong ROS 2 integration
+
+### Alternative Robot Platforms
+
+#### Unitree H1 (Higher-End Alternative)
+- **Model**: Unitree H1 Humanoid Robot
+- **Price (2025)**: $23,000.00
+- **Specifications**:
+  - 43 DOF
+  - 1.1m height, 16kg weight
+  - More advanced actuators and sensors
+- **Trade-offs**: More capable but significantly more expensive; better for advanced research
+
+#### Boston Dynamics Spot (Premium Option)
+- **Model**: Boston Dynamics Spot
+- **Price (2025)**: $74,000.00
+- **Specifications**:
+  - Quadruped robot with advanced mobility
+  - Multiple camera options
+  - ROS 2 compatibility
+- **Trade-offs**: Excellent platform but extremely expensive; not humanoid as required by curriculum
+
+#### DIY/Research Platforms
+- **Option**: Custom-built humanoid using Dynamixel servos
+- **Price (2025)**: $5,000-$10,000 depending on configuration
+- **Trade-offs**: More affordable but requires significant assembly and integration effort; less reliable than commercial platforms
+
+## Sensors and Perception
+
+### Primary Recommendation: Intel RealSense D435i
+- **Model**: Intel RealSense Depth Camera D435i
+- **Price (2025)**: $238.00
+- **Specifications**:
+  - Depth sensing: 1280×720 at 30/60/90 FPS
+  - RGB sensing: 1920×1080 at 30 FPS
+  - Integrated IMU (gyroscope and accelerometer)
+  - 94° × 65° × 100° field of view
+  - USB 3.0 connectivity
+  - ROS 2 integration packages available
+- **Why Recommended**:
+  - Excellent depth sensing capabilities
+  - ROS 2 compatibility with extensive documentation
+  - Reasonable price point for educational use
+  - Good integration with Isaac Sim for simulation
+
+### Alternative Sensors
+
+#### StereoLabs ZED 2i (Higher Quality)
+- **Model**: StereoLabs ZED 2i Camera
+- **Price (2025)**: $499.00
+- **Specifications**:
+  - 2MP resolution at 60 FPS
+  - 1080p RGB at 30 FPS
+  - Built-in spatial mapping capabilities
+  - More accurate depth sensing than D435i
+- **Trade-offs**: Higher quality but more expensive; better for advanced perception research
+
+#### Realsense L515 (LiDAR Alternative)
+- **Model**: Intel RealSense L515 LiDAR Camera
+- **Price (2025)**: $449.00
+- **Specifications**:
+  - Up to 9 meters range
+  - 1024 × 1024 depth resolution
+  - 240 FPS maximum frame rate
+- **Trade-offs**: LiDAR instead of stereo vision; different perception algorithms required
+
+## Development Computer (Simulation Environment)
+
+### Recommended: RTX 4070 Ti System
+- **GPU**: NVIDIA RTX 4070 Ti (12GB VRAM)
+- **CPU**: AMD Ryzen 7 7800X3D or Intel i7-13700K
+- **RAM**: 32GB DDR5
+- **Storage**: 1TB NVMe SSD
+- **OS**: Ubuntu 22.04 LTS
+- **Price (2025)**: $2,500-$3,000
+- **Why Recommended**:
+  - Sufficient power to run Isaac Sim simulations with multiple robots
+  - Good balance of performance and cost
+  - Compatible with all required software stack
+  - Future-proof for advanced simulations
+
+### Alternative Configurations
+
+#### Budget-Friendly Option
+- **GPU**: RTX 4060 Ti 16GB
+- **CPU**: AMD Ryzen 5 7600X
+- **RAM**: 16GB DDR5
+- **Price (2025)**: $1,500-$1,800
+- **Trade-offs**: Reduced performance for complex simulations; may struggle with multiple robots or complex environments
+
+#### High-End Option
+- **GPU**: RTX 4090 (24GB VRAM)
+- **CPU**: AMD Ryzen 9 7950X3D
+- **RAM**: 64GB DDR5
+- **Price (2025)**: $4,000-$5,000
+- **Trade-offs**: Excessive for educational use; better suited for research teams
+
+## Network and Connectivity
+
+### Ethernet Infrastructure
+- **Recommended**: Gigabit Ethernet switch with PoE+ capability
+- **Price (2025)**: $150-$300 depending on port count
+- **Why**: Ensures reliable, low-latency communication between devices
+
+### Wireless Connectivity
+- **Recommended**: Wi-Fi 6E router with 6GHz band support
+- **Price (2025)**: $200-$400
+- **Why**: Provides reliable wireless connection for mobile robots and remote access
+
+## Storage Solutions
+
+### Local Storage
+- **Recommended**: 1TB+ NVMe SSD for simulation assets
+- **Price (2025)**: $80-$150
+- **Why**: Isaac Sim requires significant storage for 3D models and simulation data
+
+### Backup Solution
+- **Recommended**: 2TB external USB 3.2 drive
+- **Price (2025)**: $80-$120
+- **Why**: Protects simulation environments and robot data
+
+## Power and Safety
+
+### UPS (Uninterruptible Power Supply)
+- **Recommended**: 1500VA UPS with surge protection
+- **Price (2025)**: $200-$400
+- **Why**: Protects expensive equipment from power surges and provides backup during outages
+
+### Power Distribution
+- **Recommended**: Industrial-grade power strips with individual switches
+- **Price (2025)**: $50-$100
+- **Why**: Allows safe isolation of equipment during maintenance
+
+## Budget-Conscious Alternatives
+
+### Entry-Level Setup (Simulation Only)
+- **Computer**: Any modern system with RTX 3060 or RTX 4060 (12GB+ VRAM)
+- **Price (2025)**: $1,000-$1,500
+- **Note**: Allows completion of all simulation-based exercises
+
+### Graduated Approach
+- **Phase 1**: Simulation setup only ($1,000-$1,500)
+- **Phase 2**: Add Jetson platform for embedded work ($249)
+- **Phase 3**: Add physical robot platform ($16,000+)
+
+## Compatibility Matrix
+
+| Component | Ubuntu 22.04 | ROS 2 Kilted Kaiju | Isaac Sim 2025 | Compatibility Notes |
+|-----------|--------------|-------------------|----------------|-------------------|
+| Jetson Orin Nano Super | ✅ | ✅ | ✅ | Native support, optimized |
+| Unitree G1 | ✅ | ✅ | ⚠️ | Simulation support available |
+| Intel RealSense D435i | ✅ | ✅ | ✅ | Excellent integration |
+| RTX 4070 Ti | ✅ | ✅ | ✅ | Optimal performance |
+| RTX 4060 Ti | ✅ | ✅ | ⚠️ | Reduced performance |
+
+## Procurement Timeline
+
+### Immediate (Start of Course)
+- Development computer with RTX 4070 Ti
+- Ubuntu 22.04 installation
+- ROS 2 Kilted Kaiju and Isaac Sim installation
+
+### Week 1-2
+- Jetson Orin Nano Super
+- Intel RealSense D435i
+- Initial robot setup and testing
+
+### Week 3+
+- Unitree G1 (if budget permits)
+- Additional sensors as needed
+- Advanced simulation environments
+
+## Warranty and Support Considerations
+
+### Recommended Support Plans
+- **Jetson Platform**: Standard manufacturer warranty (1 year)
+- **Unitree G1**: Extended warranty recommended (3 years)
+- **Development Computer**: 3-year warranty with on-site service
+- **Sensors**: Standard manufacturer warranty
+
+### Maintenance Schedule
+- Monthly: Clean sensors and check connections
+- Quarterly: Update firmware and software
+- Annually: Professional calibration and inspection
+
+## Regional Price Variations
+
+**Note**: Prices listed are approximate US MSRP as of December 2025. Actual prices may vary by region, tax, and availability. Consider local distributors for accurate regional pricing and import duties.
+
+## Next Steps
+
+Once you've reviewed these hardware recommendations, proceed to the setup guide in the appendix for detailed installation and configuration instructions. The hardware setup is designed to support both simulation-based learning (Chapters 1-2) and real-world robot implementation (Chapters 3-7).

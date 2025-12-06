@@ -1,0 +1,158 @@
+---
+title: 'Core ROS 2 Concepts'
+description: 'Understanding the fundamental concepts of Robot Operating System 2'
+tags: [beginner, ros2, concepts, architecture]
+sidebar_position: 2
+---
+
+# Core ROS 2 Concepts
+
+<DifficultyIndicator level="beginner" />
+
+<PersonalizationPanel
+  initialSettings={{
+    difficultyFilter: 'beginner',
+    learningPath: 'theoretical',
+    showAdvancedContent: false,
+    showSimplifiedExplanations: true,
+    includeAdditionalExamples: true,
+    highlightKeyConcepts: true
+  }}
+  studentProfile={{
+    skillLevel: 'beginner',
+    preferredLearningPath: 'theoretical'
+  }}
+/>
+
+ROS 2 (Robot Operating System 2) is a flexible framework for writing robot software. It's a collection of tools, libraries, and conventions that aim to simplify the task of creating complex and robust robot behavior across a wide variety of robot platforms and environments.
+
+## What is ROS 2?
+
+ROS 2 is not an operating system in the traditional sense, but rather a middleware framework that provides services designed for a heterogeneous computer cluster. It includes:
+
+- Hardware abstraction
+- Device drivers
+- Libraries
+- Visualizers
+- Message-passing
+- Package management
+- And more
+
+## Key Advantages of ROS 2
+
+### 1. Distributed Computing
+ROS 2 allows you to distribute computation across multiple machines, which is essential for humanoid robots that may have separate computers for perception, control, and high-level planning.
+
+### 2. Language Agnostic
+While we'll primarily use Python in this textbook, ROS 2 supports multiple programming languages including C++, Python, and Rust.
+
+### 3. Real-time Capabilities
+ROS 2 provides real-time scheduling capabilities that are crucial for robot control applications.
+
+### 4. Security
+Unlike ROS 1, ROS 2 includes built-in security features that are important for deployed robotic systems.
+
+## ROS 2 vs ROS 1
+
+ROS 2 was developed to address limitations of ROS 1:
+
+- **Better real-time support**: Essential for robot control
+- **Improved security**: Built-in authentication and encryption
+- **Cross-platform support**: Works on Linux, macOS, Windows, and RTOS
+- **Modern toolchain**: Based on DDS (Data Distribution Service) for communication
+
+## Core ROS 2 Architecture
+
+The fundamental concepts in ROS 2 are:
+
+1. **Nodes**: Processes that perform computation
+2. **Topics**: Named buses over which nodes exchange messages
+3. **Services**: Synchronous request/response communication
+4. **Actions**: Goal-oriented communication patterns
+5. **Parameters**: Configuration values that can be changed at runtime
+
+### Nodes
+A node is a process that performs computation. In a well-designed ROS 2 system, each node should have a single, specific purpose. For example, a humanoid robot might have nodes for:
+- Joint control
+- Perception processing
+- Path planning
+- High-level behavior
+
+### Topics and Messages
+Topics allow nodes to exchange data in a publish/subscribe pattern. A node publishes messages to a topic, and other nodes subscribe to that topic to receive the messages. This enables asynchronous communication between nodes.
+
+### Services
+Services provide synchronous request/response communication. A client sends a request to a service, and the service sends back a response. This is useful for operations that need to complete before the client can continue.
+
+### Actions
+Actions are used for long-running tasks that have feedback and can be canceled. They're ideal for navigation, manipulation, or any task that takes a significant amount of time.
+
+## ROS 2 Ecosystem
+
+ROS 2 includes a rich ecosystem of packages that are essential for robotics:
+
+- **Navigation2**: For robot navigation and path planning
+- **MoveIt2**: For motion planning and manipulation
+- **Vision**: For computer vision and image processing
+- **Control**: For robot control and dynamics
+- **Simulation**: For robot simulation and testing
+
+## Setting Up Your ROS 2 Environment
+
+Before diving into coding, you need to set up your ROS 2 environment:
+
+```bash
+# Source the ROS 2 installation (add this to your ~/.bashrc file)
+source /opt/ros/rolling/setup.bash
+
+# Create a workspace for your custom packages
+mkdir -p ~/ros2_ws/src
+cd ~/ros2_ws
+
+# Source the workspace (after building packages)
+source install/setup.bash
+```
+
+## ROS 2 Tools
+
+ROS 2 provides many command-line tools for debugging and monitoring:
+
+- `ros2 run`: Run a node
+- `ros2 topic`: Inspect and interact with topics
+- `ros2 service`: Inspect and interact with services
+- `ros2 action`: Inspect and interact with actions
+- `ros2 node`: Inspect nodes
+- `rqt`: Graphical tools for visualization
+- `rviz2`: 3D visualization tool
+
+<LabExercise
+  title="ROS 2 Environment Setup Lab"
+  objectives={[
+    "Set up the ROS 2 environment",
+    "Verify ROS 2 installation",
+    "Explore basic ROS 2 tools"
+  ]}
+  prerequisites={[
+    "ROS 2 Kilted Kaiju installed",
+    "Ubuntu 22.04 configured"
+  ]}
+  steps={[
+    "Source ROS 2: `source /opt/ros/rolling/setup.bash`",
+    "Verify installation: `ros2 --version`",
+    "List available ROS 2 commands: `ros2`",
+    "Check available packages: `ros2 pkg list | grep std`"
+  ]}
+  expectedOutcome="All commands should execute successfully and show ROS 2 information"
+  troubleshootingTips={[
+    "If 'ros2' command is not found, check that you've properly installed ROS 2",
+    "If you get permission errors, ensure you're using the correct shell and environment"
+  ]}
+/>
+
+## Summary
+
+In this section, we've covered the fundamental concepts of ROS 2. You now understand what ROS 2 is, its advantages, and the core architectural concepts. In the next section, we'll dive deeper into nodes, topics, and services, which form the backbone of ROS 2 communication.
+
+## Next Steps
+
+Continue to the next section where we'll explore the core communication patterns in ROS 2: nodes, topics, and services.

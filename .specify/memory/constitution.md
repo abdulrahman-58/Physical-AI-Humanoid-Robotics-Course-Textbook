@@ -1,55 +1,51 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# Physical AI & Humanoid Robotics Course Textbook Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Teach-First Mindset
+Every explanation must be clear, hands-on, and immediately testable. All content must prioritize student understanding and practical application over theoretical completeness.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. Curriculum Alignment
+All content must be 100% aligned with Panaversity/Panaverse curriculum (exact modules, weeks, learning outcomes). Every chapter and lab must map directly to specific learning objectives.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### III. Technical Accuracy and Future-Proofing
+All technical information must be accurate as of December 2025, with current tools, versions, prices, and hardware specifications. Code snippets must be syntactically correct, copy-paste-ready, and tested with rclpy.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### IV. Hardware Accessibility
+All recommendations must be achievable with realistic student hardware: Ubuntu 22.04 + ROS 2 Kilted Kaiju + NVIDIA Isaac Sim 2025. Hardware recommendations must include current real prices and exact model numbers (Jetson Orin Nano Super $249, Unitree G1, etc.).
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### V. Zero Hallucination Policy
+No technical facts, URDF, ROS 2 APIs, or Isaac Sim features may be fabricated. All technical claims must be verifiable and accurate. If uncertain about technical details, clearly state limitations rather than making assumptions.
 
-### [PRINCIPLE_6_NAME]
+### VI. Embodied Intelligence Philosophy
+The concept of embodied intelligence must be woven into every chapter, emphasizing the integration of perception, cognition, and action in physical systems.
 
+## Technical Standards
 
-[PRINCIPLE__DESCRIPTION]
+### Markdown and Documentation Format
+All content must be Spec-Kit Plus + Docusaurus-ready (MDX, proper headings, tables, code blocks). Every major concept must have a described diagram or suggested image to enhance understanding.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+### Code Quality Standards
+All code snippets must run on Ubuntu 22.04 + ROS 2 Kilted Kaiju + NVIDIA Isaac Sim 2025. Code must be copy-paste-ready and immediately testable. All code examples must follow rclpy best practices and include proper error handling.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### Content Structure
+The textbook must follow a 7-chapter structure with appendix, matching the exact weekly breakdown. Content must be tagged for beginner/intermediate/advanced tracks to enable personalization.
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+## Development Workflow
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+### Content Creation Process
+All content must be developed with the student experience in mind. Every lab must be testable end-to-end by a student with RTX 4070 Ti + Jetson kit. Content must be deployable with Spec-Kit Plus → GitHub Pages in under 5 minutes.
+
+### Review and Validation
+All content must be validated for technical accuracy before publication. Code examples must be tested in the target environment. Visual aids must be properly described for accessibility.
+
+### Personalization-Ready Design
+Content must be structured to support personalization for different skill levels. Each section should be clearly tagged for beginner/intermediate/advanced tracks with appropriate prerequisites noted.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+This constitution governs all development of the Physical AI & Humanoid Robotics Course Textbook. All content, code, and documentation must comply with these principles. Amendments to this constitution require explicit approval and must be documented with clear justification. All contributors must verify compliance with these principles during reviews.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+All PRs/reviews must verify compliance with technical accuracy, hardware accessibility, and curriculum alignment. Content complexity must be justified by learning objectives and student prerequisites.
+
+**Version**: 1.0.0 | **Ratified**: 2025-12-06 | **Last Amended**: 2025-12-06

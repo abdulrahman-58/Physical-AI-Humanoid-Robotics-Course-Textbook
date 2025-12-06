@@ -1,0 +1,233 @@
+# Textbook Interactive Components API Contract
+
+## Overview
+This contract defines the API for interactive components in the Physical AI & Humanoid Robotics textbook. These components enable personalized learning experiences, progress tracking, and RAG chatbot integration.
+
+## Base URL
+`/api/v1/textbook`
+
+## Authentication
+All endpoints require authentication via session token or JWT in the Authorization header.
+
+## Endpoints
+
+### Student Profile Management
+
+#### GET `/student/profile`
+Retrieve current student profile including skill level, progress, and preferences.
+
+**Response**:
+```json
+{
+  "id": "string",
+  "skill_level": "beginner|intermediate|advanced",
+  "preferred_learning_path": "theoretical|practical|mixed",
+  "completed_chapters": ["string"],
+  "completed_labs": ["string"],
+  "progress_percentage": 0.0-100.0,
+  "personalization_settings": {
+    "difficulty_filter": "beginner|intermediate|advanced",
+    "learning_path": "theoretical|practical|mixed"
+  }
+}
+```
+
+#### PUT `/student/profile`
+Update student profile and preferences.
+
+**Request**:
+```json
+{
+  "skill_level": "beginner|intermediate|advanced",
+  "preferred_learning_path": "theoretical|practical|mixed",
+  "personalization_settings": {
+    "difficulty_filter": "beginner|intermediate|advanced",
+    "learning_path": "theoretical|practical|mixed"
+  }
+}
+```
+
+### Progress Tracking
+
+#### POST `/progress/chapter/{chapterId}/complete`
+Mark a chapter as completed.
+
+**Response**:
+```json
+{
+  "chapter_id": "string",
+  "status": "completed",
+  "completion_date": "ISO 8601 timestamp",
+  "time_spent_minutes": "integer"
+}
+```
+
+#### POST `/progress/lab/{labId}/complete`
+Mark a lab exercise as completed.
+
+**Request**:
+```json
+{
+  "lab_id": "string",
+  "outcome": "success|partial|failed",
+  "time_spent_minutes": "integer",
+  "notes": "string (optional)"
+}
+```
+
+**Response**:
+```json
+{
+  "lab_id": "string",
+  "status": "completed",
+  "outcome": "success|partial|failed",
+  "completion_date": "ISO 8601 timestamp",
+  "time_spent_minutes": "integer"
+}
+```
+
+### Content Personalization
+
+#### GET `/content/chapter/{chapterId}`
+Retrieve chapter content tailored to student profile.
+
+**Query Parameters**:
+- `difficulty`: beginner|intermediate|advanced (optional, defaults to student preference)
+- `format`: mdx|html|pdf (optional, defaults to mdx)
+
+**Response**:
+```json
+{
+  "chapter_id": "string",
+  "title": "string",
+  "difficulty_level": "beginner|intermediate|advanced",
+  "content": "string (MDX format)",
+  "learning_objectives": ["string"],
+  "prerequisites": ["string"],
+  "estimated_duration_minutes": "integer",
+  "personalized_elements": {
+    "simplified_explanations": "boolean",
+    "additional_examples": "boolean",
+    "advanced_content": "boolean"
+  }
+}
+```
+
+### Hardware Recommendations
+
+#### GET `/hardware/recommendations`
+Retrieve hardware recommendations based on student budget and requirements.
+
+**Query Parameters**:
+- `budget_max`: integer (optional, in USD)
+- `use_case`: simulation|physical_robot|both (optional, defaults to both)
+
+**Response**:
+```json
+{
+  "recommendations": [
+    {
+      "component_name": "string",
+      "model_number": "string",
+      "price_2025_usd": "number",
+      "specifications": {
+        "cpu": "string",
+        "gpu": "string",
+        "ram": "string",
+        "storage": "string"
+      },
+      "compatibility": ["string"],
+      "alternatives": [
+        {
+          "component_name": "string",
+          "model_number": "string",
+          "price_2025_usd": "number",
+          "tradeoffs": "string"
+        }
+      ]
+    }
+  ]
+}
+```
+
+### RAG Chatbot Integration
+
+#### POST `/chatbot/query`
+Submit a question to the RAG-enhanced chatbot for textbook content.
+
+**Request**:
+```json
+{
+  "query": "string",
+  "context": {
+    "current_chapter": "string",
+    "current_section": "string",
+    "student_level": "beginner|intermediate|advanced"
+  },
+  "include_sources": "boolean (optional, defaults to true)"
+}
+```
+
+**Response**:
+```json
+{
+  "response": "string",
+  "sources": [
+    {
+      "chapter": "string",
+      "section": "string",
+      "relevance_score": 0.0-1.0
+    }
+  ],
+  "followup_suggestions": ["string"]
+}
+```
+
+### Content Search
+
+#### GET `/content/search`
+Search textbook content with relevance to current learning path.
+
+**Query Parameters**:
+- `q`: search query string
+- `type`: chapter|lab|concept|code (optional, comma-separated)
+- `difficulty`: beginner|intermediate|advanced (optional)
+- `limit`: number of results (optional, defaults to 10)
+
+**Response**:
+```json
+{
+  "results": [
+    {
+      "id": "string",
+      "title": "string",
+      "type": "chapter|lab|concept|code",
+      "difficulty": "beginner|intermediate|advanced",
+      "relevance_score": 0.0-1.0,
+      "preview": "string",
+      "url": "string"
+    }
+  ],
+  "total_results": "integer"
+}
+```
+
+## Error Responses
+
+All endpoints return standard error responses:
+
+```json
+{
+  "error": {
+    "code": "string",
+    "message": "string",
+    "details": "string (optional)"
+  }
+}
+```
+
+Common error codes:
+- `AUTH_REQUIRED`: Authentication token missing or invalid
+- `NOT_FOUND`: Requested resource does not exist
+- `VALIDATION_ERROR`: Request parameters failed validation
+- `INTERNAL_ERROR`: Server-side error occurred

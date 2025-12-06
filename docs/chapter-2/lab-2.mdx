@@ -1,0 +1,363 @@
+---
+title: 'Lab 2: Your First Isaac Sim Environment with ROS 2'
+description: 'Create and control your first simulation environment in Isaac Sim connected to ROS 2'
+tags: [intermediate, isaac, simulation, lab, ros2, digital-twin]
+sidebar_position: 4
+---
+
+# Lab 2: Your First Isaac Sim Environment with ROS 2
+
+<DifficultyIndicator level="intermediate" />
+
+<PersonalizationPanel
+  initialSettings={{
+    difficultyFilter: 'intermediate',
+    learningPath: 'practical',
+    showAdvancedContent: false,
+    showSimplifiedExplanations: true,
+    includeAdditionalExamples: true,
+    highlightKeyConcepts: true
+  }}
+  studentProfile={{
+    skillLevel: 'intermediate',
+    preferredLearningPath: 'practical'
+  }}
+/>
+
+In this lab, you'll create your first Isaac Sim environment and connect it to ROS 2. This exercise will help you understand how to create digital twins of robots and environments, and how to control them using ROS 2 nodes.
+
+## Learning Objectives
+
+After completing this lab, you will be able to:
+- [ ] Launch Isaac Sim and create a basic simulation environment
+- [ ] Import or create a simple robot model in Isaac Sim
+- [ ] Connect Isaac Sim to ROS 2 for robot control
+- [ ] Control the simulated robot using ROS 2 commands
+- [ ] Validate the simulation results against expected behavior
+
+## Prerequisites
+
+Before starting this lab, you should:
+- [ ] Complete Chapter 1: ROS 2 Basics
+- [ ] Complete Chapter 2 Sections 1-3 (installation and concepts)
+- [ ] Have Isaac Sim 2025 installed and configured
+- [ ] Have ROS 2 Kilted Kaiju installed and working
+- [ ] Be comfortable with basic ROS 2 commands
+
+## Setting Up the Environment
+
+### 1. Launch Isaac Sim
+First, launch Isaac Sim and set up a basic scene:
+
+```bash
+# Source ROS 2 environment
+source /opt/ros/rolling/setup.bash
+
+# Launch Isaac Sim
+/isaac-sim/isaac-sim.launch.sh
+```
+
+### 2. Create a New Stage
+Once Isaac Sim is running:
+
+1. Create a new USD stage (Ctrl+N)
+2. Save the stage as `~/isaac_sim_workshop/basic_robot_stage.usd`
+3. Set up the basic scene with:
+   - A ground plane
+   - A simple lighting setup
+   - Basic physics properties enabled
+
+### 3. Enable ROS 2 Bridge Extension
+1. Go to Window → Extensions
+2. Search for "ROS2" in the extension manager
+3. Enable the "ROS2 Bridge" extension
+4. The extension should appear in the toolbar
+
+## Creating a Simple Robot Model
+
+### Option A: Import a Pre-made Robot Model
+For this lab, we'll use a simple wheeled robot model:
+
+1. In Isaac Sim, go to the Content Browser (usually on the right)
+2. Navigate to `Isaac/Robots/RealsenseCamera`
+3. Drag the RealsenseCamera robot into your scene
+4. Position it on the ground plane
+
+### Option B: Create a Simple Custom Robot
+Alternatively, create a simple robot from primitives:
+
+1. Create a cube (Window → Create → Primitive → Cube) as the robot body
+2. Create 4 smaller cylinders as wheels
+3. Position the wheels at the corners of the body
+4. Create a joint between the body and each wheel (if you want to simulate wheel movement)
+
+## Connecting Isaac Sim to ROS 2
+
+### 1. Configure ROS 2 Bridge
+1. With the ROS 2 Bridge extension enabled, click on the "ROS Bridge" button in the toolbar
+2. This will enable ROS 2 communication within Isaac Sim
+3. You should see ROS 2-related options appear in Isaac Sim
+
+### 2. Set Up Robot Control
+1. Select your robot in the stage
+2. In the Property Panel (usually on the right), look for "ROS2" components
+3. Add a "ROS2 Robot Control" component to your robot
+4. Configure the control interface (typically for differential drive)
+
+### 3. Verify ROS 2 Connection
+Open a new terminal and verify that Isaac Sim is communicating with ROS 2:
+
+```bash
+# Source ROS 2 environment
+source /opt/ros/rolling/setup.bash
+
+# Check for active ROS 2 topics
+ros2 topic list
+
+# You should see topics related to your Isaac Sim robot
+```
+
+## Controlling the Robot with ROS 2
+
+### 1. Create a Simple Control Node
+Create a Python script to control your robot. First, create a ROS 2 package:
+
+```bash
+# Create workspace if you don't have one
+mkdir -p ~/sim_control_ws/src
+cd ~/sim_control_ws
+
+# Source ROS 2
+source /opt/ros/rolling/setup.bash
+
+# Create a package for the control node
+cd src
+ros2 pkg create --build-type ament_python isaac_sim_control
+cd isaac_sim_control
+```
+
+Create the control script at `isaac_sim_control/isaac_sim_control/simple_controller.py`:
+
+```python
+#!/usr/bin/env python3
+"""
+Simple controller for Isaac Sim robot
+"""
+
+import rclpy
+from rclpy.node import Node
+from geometry_msgs.msg import Twist
+import time
+
+
+class SimpleController(Node):
+    def __init__(self):
+        super().__init__('simple_controller')
+
+        # Create publisher for robot velocity commands
+        self.cmd_vel_publisher = self.create_publisher(
+            Twist,
+            '/diff_drive_controller/cmd_vel_unstamped',  # Adjust topic name based on your setup
+            10
+        )
+
+        # Create timer to send commands periodically
+        self.timer = self.create_timer(0.1, self.timer_callback)
+        self.i = 0
+
+        self.get_logger().info('Simple Controller initialized')
+
+    def timer_callback(self):
+        msg = Twist()
+
+        # Simple movement pattern: move forward, then turn
+        if self.i < 50:  # Move forward for 5 seconds
+            msg.linear.x = 0.5  # Forward speed
+            msg.angular.z = 0.0  # No rotation
+        elif self.i < 100:  # Turn for 5 seconds
+            msg.linear.x = 0.0  # No forward movement
+            msg.angular.z = 0.5  # Turn speed
+        else:
+            self.i = 0  # Reset counter
+            return
+
+        self.cmd_vel_publisher.publish(msg)
+        self.i += 1
+
+
+def main(args=None):
+    rclpy.init(args=args)
+    simple_controller = SimpleController()
+
+    try:
+        rclpy.spin(simple_controller)
+    except KeyboardInterrupt:
+        pass
+    finally:
+        simple_controller.destroy_node()
+        rclpy.shutdown()
+
+
+if __name__ == '__main__':
+    main()
+```
+
+### 2. Update Package Configuration
+Update the `setup.py` file in your package to make the script executable:
+
+```python
+import os
+from glob import glob
+from setuptools import setup
+
+from setuptools import find_packages
+
+package_name = 'isaac_sim_control'
+
+setup(
+    name=package_name,
+    version='0.0.0',
+    packages=find_packages(exclude=['test']),
+    data_files=[
+        ('share/ament_index/resource_index/packages',
+            ['resource/' + package_name]),
+        ('share/' + package_name, ['package.xml']),
+    ],
+    install_requires=['setuptools'],
+    zip_safe=True,
+    maintainer='your_name',
+    maintainer_email='your_email@example.com',
+    description='Simple controller for Isaac Sim robot',
+    license='TODO: License declaration',
+    tests_require=['pytest'],
+    entry_points={
+        'console_scripts': [
+            'simple_controller = isaac_sim_control.simple_controller:main',
+        ],
+    },
+)
+```
+
+### 3. Build and Run the Control Node
+```bash
+# Build the package
+cd ~/sim_control_ws
+source /opt/ros/rolling/setup.bash
+colcon build --packages-select isaac_sim_control
+
+# Source the workspace
+source install/setup.bash
+
+# Run the controller
+ros2 run isaac_sim_control simple_controller
+```
+
+## Running the Simulation
+
+### 1. Configure Isaac Sim for Control
+1. In Isaac Sim, make sure physics is enabled (click the "Play" button)
+2. Verify that your robot responds to the ROS 2 commands
+3. You should see the robot moving in the simulation according to the pattern in your control script
+
+### 2. Monitor Communication
+In a separate terminal, monitor the ROS 2 communication:
+
+```bash
+# Source ROS 2
+source /opt/ros/rolling/setup.bash
+
+# Monitor the command topic
+ros2 topic echo /diff_drive_controller/cmd_vel_unstamped geometry_msgs/msg/Twist
+
+# List active nodes
+ros2 node list
+```
+
+### 3. Experiment with Different Commands
+Try modifying the control script to create different movement patterns:
+- Circular motion
+- Square path
+- Random movements
+- Obstacle avoidance (if you add obstacles to your scene)
+
+## Validation and Testing
+
+### 1. Verify Robot Movement
+- Does the robot move forward when linear.x is positive?
+- Does the robot turn when angular.z is non-zero?
+- Are the movements smooth and realistic?
+
+### 2. Check Physics Properties
+- Does the robot interact properly with the ground plane?
+- Do collisions behave as expected?
+- Is the movement speed realistic?
+
+### 3. Validate ROS 2 Communication
+- Are commands being sent from ROS 2 to Isaac Sim?
+- Is the simulation responding to commands in real-time?
+- Are there any delays or synchronization issues?
+
+## Troubleshooting Common Issues
+
+### Issue 1: Robot Not Moving
+**Symptoms**: ROS 2 node runs but robot doesn't move in Isaac Sim
+**Solutions**:
+- Check that the ROS 2 topic names match between your controller and Isaac Sim
+- Verify that physics is enabled in Isaac Sim (click the "Play" button)
+- Check that the robot has proper joint configurations in Isaac Sim
+
+### Issue 2: Topic Names Don't Match
+**Symptoms**: ROS 2 node publishes messages but Isaac Sim doesn't receive them
+**Solutions**:
+- Use `ros2 topic list` to see available topics
+- Check Isaac Sim documentation for correct topic names
+- Ensure the ROS 2 bridge is properly configured in Isaac Sim
+
+### Issue 3: Performance Issues
+**Symptoms**: Slow simulation or choppy movement
+**Solutions**:
+- Reduce scene complexity during testing
+- Adjust physics substeps in Isaac Sim settings
+- Close other GPU-intensive applications
+
+### Issue 4: ROS 2 Bridge Not Working
+**Symptoms**: Isaac Sim and ROS 2 are not communicating
+**Solutions**:
+- Verify that the ROS 2 Bridge extension is enabled
+- Check that ROS_DOMAIN_ID is the same in both Isaac Sim and your ROS 2 terminal
+- Restart both Isaac Sim and your ROS 2 nodes
+
+## Extending the Exercise
+
+### Advanced Challenges
+1. **Add Sensors**: Configure a camera or LiDAR sensor on your robot and subscribe to the sensor data
+2. **Obstacle Course**: Create an obstacle course in Isaac Sim and program your robot to navigate it
+3. **Multiple Robots**: Create multiple robots in the same simulation and coordinate their movements
+4. **Real-time Control**: Implement a teleoperation interface to control the robot in real-time
+
+### Integration with Chapter 1 Concepts
+- Use the publisher/subscriber pattern from Chapter 1 to create custom messages for robot state
+- Implement services to request specific robot behaviors
+- Use actions for long-running robot tasks
+
+## Expected Results
+
+When you complete this lab, you should have:
+- A working Isaac Sim environment with a controllable robot
+- ROS 2 nodes that can send commands to the simulated robot
+- Verification that the simulation responds correctly to commands
+- Understanding of the connection between real-world robotics concepts and simulation
+
+## Summary
+
+In this lab, you've successfully:
+1. Created a basic simulation environment in Isaac Sim
+2. Connected Isaac Sim to ROS 2 for robot control
+3. Implemented a simple controller to move the robot
+4. Validated the simulation results
+
+This exercise demonstrates the power of digital twins in robotics development, allowing you to test and validate robot behaviors in a safe, controlled environment before deploying to real hardware.
+
+## Next Steps
+
+Now that you understand how to create and control simulated robots, continue to Chapter 3 where you'll learn about robot control theory and implement more sophisticated controllers that can work in both simulation and on real hardware.

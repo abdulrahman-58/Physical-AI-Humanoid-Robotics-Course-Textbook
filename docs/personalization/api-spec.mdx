@@ -1,0 +1,515 @@
+---
+title: 'Personalization API Specification'
+description: 'API specification for student profile management and content personalization'
+tags: [personalization, api, student-profile, content-adaptation]
+sidebar_position: 1
+---
+
+# Personalization API Specification
+
+<DifficultyIndicator level="advanced" />
+
+This document specifies the API endpoints for student profile management and content personalization in the Physical AI & Humanoid Robotics textbook. The API enables personalized learning experiences based on student skill level and learning preferences.
+
+## API Overview
+
+### Base URL
+```
+https://api.physical-ai-textbook.panaversity.com/v1
+```
+
+### Authentication
+All endpoints require authentication via JWT token in the Authorization header:
+```
+Authorization: Bearer <jwt_token>
+```
+
+### Content Negotiation
+- **Request Format**: JSON
+- **Response Format**: JSON
+- **Character Encoding**: UTF-8
+- **Media Type**: application/json
+
+## Student Profile Management
+
+### Get Student Profile
+**Endpoint**: `GET /student/profile`
+
+**Description**: Retrieve the current student's profile including skill level, learning preferences, and progress.
+
+**Authentication**: Required
+
+**Response Codes**:
+- 200: Success
+- 401: Unauthorized
+- 404: Profile not found
+- 500: Server error
+
+**Response Body**:
+```json
+{
+  "id": "string",
+  "userId": "string",
+  "skillLevel": "beginner|intermediate|advanced",
+  "preferredLearningPath": "theoretical|practical|mixed",
+  "completedChapters": ["string"],
+  "completedLabs": ["string"],
+  "progressPercentage": 0.0-100.0,
+  "personalizationSettings": {
+    "difficultyFilter": "beginner|intermediate|advanced",
+    "learningPath": "theoretical|practical|mixed",
+    "showAdvancedContent": boolean,
+    "showSimplifiedExplanations": boolean,
+    "includeAdditionalExamples": boolean,
+    "highlightKeyConcepts": boolean
+  },
+  "createdAt": "ISO 8601 timestamp",
+  "updatedAt": "ISO 8601 timestamp"
+}
+```
+
+### Update Student Profile
+**Endpoint**: `PUT /student/profile`
+
+**Description**: Update student profile and preferences.
+
+**Authentication**: Required
+
+**Request Body**:
+```json
+{
+  "skillLevel": "beginner|intermediate|advanced",
+  "preferredLearningPath": "theoretical|practical|mixed",
+  "personalizationSettings": {
+    "difficultyFilter": "beginner|intermediate|advanced",
+    "learningPath": "theoretical|practical|mixed",
+    "showAdvancedContent": boolean,
+    "showSimplifiedExplanations": boolean,
+    "includeAdditionalExamples": boolean,
+    "highlightKeyConcepts": boolean
+  }
+}
+```
+
+**Response Codes**:
+- 200: Success
+- 400: Invalid request body
+- 401: Unauthorized
+- 500: Server error
+
+**Response Body**:
+```json
+{
+  "success": true,
+  "profile": {
+    "id": "string",
+    "userId": "string",
+    "skillLevel": "beginner|intermediate|advanced",
+    "preferredLearningPath": "theoretical|practical|mixed",
+    "personalizationSettings": {
+      "difficultyFilter": "beginner|intermediate|advanced",
+      "learningPath": "theoretical|practical|mixed",
+      "showAdvancedContent": boolean,
+      "showSimplifiedExplanations": boolean,
+      "includeAdditionalExamples": boolean,
+      "highlightKeyConcepts": boolean
+    },
+    "updatedAt": "ISO 8601 timestamp"
+  }
+}
+```
+
+## Content Personalization
+
+### Get Personalized Chapter Content
+**Endpoint**: `GET /content/chapter/{chapterId}`
+
+**Description**: Retrieve chapter content tailored to student profile with personalization options.
+
+**Path Parameters**:
+- `chapterId`: The ID of the chapter (e.g., "chapter-1", "chapter-2")
+
+**Query Parameters**:
+- `difficulty` (optional): Override difficulty level (beginner|intermediate|advanced)
+- `format` (optional): Output format (mdx|html|pdf)
+
+**Authentication**: Required
+
+**Response Codes**:
+- 200: Success
+- 401: Unauthorized
+- 404: Chapter not found
+- 500: Server error
+
+**Response Body**:
+```json
+{
+  "chapterId": "string",
+  "title": "string",
+  "difficultyLevel": "beginner|intermediate|advanced",
+  "content": "string (MDX format)",
+  "learningObjectives": ["string"],
+  "prerequisites": ["string"],
+  "estimatedDurationMinutes": "integer",
+  "personalizedElements": {
+    "simplifiedExplanations": boolean,
+    "additionalExamples": boolean,
+    "advancedContent": boolean,
+    "highlightedConcepts": boolean
+  },
+  "recommendedNext": "string",
+  "tags": ["string"]
+}
+```
+
+### Get Personalized Section Content
+**Endpoint**: `GET /content/section/{sectionId}`
+
+**Description**: Retrieve specific section content with personalization.
+
+**Path Parameters**:
+- `sectionId`: The ID of the section (e.g., "chapter-1/ros2-basics")
+
+**Query Parameters**:
+- `difficulty` (optional): Override difficulty level
+- `includeExercises` (optional): Include exercises (true|false, default: true)
+
+**Authentication**: Required
+
+**Response Codes**:
+- 200: Success
+- 401: Unauthorized
+- 404: Section not found
+- 500: Server error
+
+**Response Body**:
+```json
+{
+  "sectionId": "string",
+  "title": "string",
+  "difficultyLevel": "beginner|intermediate|advanced",
+  "content": "string (MDX format)",
+  "learningObjectives": ["string"],
+  "exercises": [
+    {
+      "id": "string",
+      "type": "quiz|coding|discussion",
+      "content": "string",
+      "difficulty": "beginner|intermediate|advanced"
+    }
+  ],
+  "estimatedDurationMinutes": "integer",
+  "personalizedElements": {
+    "simplifiedExplanations": boolean,
+    "additionalExamples": boolean,
+    "advancedContent": boolean
+  }
+}
+```
+
+## Progress Tracking
+
+### Mark Chapter as Completed
+**Endpoint**: `POST /progress/chapter/{chapterId}/complete`
+
+**Description**: Mark a chapter as completed and update student progress.
+
+**Path Parameters**:
+- `chapterId`: The ID of the chapter
+
+**Authentication**: Required
+
+**Request Body**:
+```json
+{
+  "timeSpentMinutes": "integer",
+  "notes": "string (optional)"
+}
+```
+
+**Response Codes**:
+- 200: Success
+- 400: Invalid request body
+- 401: Unauthorized
+- 404: Chapter not found
+- 500: Server error
+
+**Response Body**:
+```json
+{
+  "chapterId": "string",
+  "status": "completed",
+  "completionDate": "ISO 8601 timestamp",
+  "timeSpentMinutes": "integer",
+  "progressPercentage": 0.0-100.0
+}
+```
+
+### Mark Lab as Completed
+**Endpoint**: `POST /progress/lab/{labId}/complete`
+
+**Description**: Mark a lab exercise as completed.
+
+**Path Parameters**:
+- `labId`: The ID of the lab (e.g., "chapter-1/lab-1")
+
+**Authentication**: Required
+
+**Request Body**:
+```json
+{
+  "outcome": "success|partial|failed",
+  "timeSpentMinutes": "integer",
+  "notes": "string (optional)"
+}
+```
+
+**Response Codes**:
+- 200: Success
+- 400: Invalid request body
+- 401: Unauthorized
+- 404: Lab not found
+- 500: Server error
+
+**Response Body**:
+```json
+{
+  "labId": "string",
+  "status": "completed",
+  "outcome": "success|partial|failed",
+  "completionDate": "ISO 8601 timestamp",
+  "timeSpentMinutes": "integer",
+  "notes": "string"
+}
+```
+
+## Learning Path Recommendations
+
+### Get Recommended Learning Path
+**Endpoint**: `GET /recommendations/learning-path`
+
+**Description**: Get personalized learning path recommendations based on student profile and progress.
+
+**Authentication**: Required
+
+**Query Parameters**:
+- `limit` (optional): Number of recommendations to return (default: 5)
+- `includeCompleted` (optional): Include already completed items (default: false)
+
+**Response Codes**:
+- 200: Success
+- 401: Unauthorized
+- 500: Server error
+
+**Response Body**:
+```json
+{
+  "recommendations": [
+    {
+      "id": "string",
+      "title": "string",
+      "type": "chapter|section|lab|exercise",
+      "difficulty": "beginner|intermediate|advanced",
+      "estimatedTimeMinutes": "integer",
+      "relevanceScore": 0.0-1.0,
+      "reason": "string"
+    }
+  ],
+  "totalRecommendations": "integer"
+}
+```
+
+### Get Content Difficulty Adjustment
+**Endpoint**: `POST /content/difficulty-adjust`
+
+**Description**: Adjust content difficulty based on student performance and feedback.
+
+**Authentication**: Required
+
+**Request Body**:
+```json
+{
+  "itemId": "string",
+  "itemType": "chapter|section|lab",
+  "performanceRating": 1-5,
+  "feedback": "string (optional)",
+  "timeSpentRatio": "float (actual_time / estimated_time)"
+}
+```
+
+**Response Codes**:
+- 200: Success
+- 400: Invalid request body
+- 401: Unauthorized
+- 500: Server error
+
+**Response Body**:
+```json
+{
+  "success": true,
+  "adjustmentApplied": {
+    "previousDifficulty": "beginner|intermediate|advanced",
+    "newDifficulty": "beginner|intermediate|advanced",
+    "confidence": 0.0-1.0
+  },
+  "recommendations": ["string"]
+}
+```
+
+## Error Handling
+
+### Standard Error Response
+All error responses follow this format:
+```json
+{
+  "error": {
+    "code": "string",
+    "message": "string",
+    "details": "string (optional)"
+  }
+}
+```
+
+### Common Error Codes
+- `AUTHENTICATION_REQUIRED`: No valid authentication token provided
+- `INSUFFICIENT_PERMISSIONS`: User doesn't have permission for this action
+- `RESOURCE_NOT_FOUND`: Requested resource doesn't exist
+- `VALIDATION_ERROR`: Request body validation failed
+- `SERVER_ERROR`: Unexpected server error occurred
+- `PERSONALIZATION_ERROR`: Error in personalization logic
+
+## Rate Limiting
+
+### API Rate Limits
+- **Authenticated Requests**: 100 requests per minute per user
+- **Unauthenticated Requests**: 10 requests per minute per IP
+- **Burst Limit**: 200 requests per minute with gradual replenishment
+
+### Rate Limit Headers
+Responses include rate limit information:
+- `X-RateLimit-Limit`: Request limit per time window
+- `X-RateLimit-Remaining`: Remaining requests in current window
+- `X-RateLimit-Reset`: Unix timestamp for next window
+
+## CORS Policy
+
+### Allowed Origins
+- `https://textbook.panaversity.com`
+- `https://physical-ai-textbook.panaversity.com`
+- `https://panaversity.github.io`
+
+### Allowed Methods
+- `GET`, `POST`, `PUT`, `DELETE`, `OPTIONS`
+
+### Allowed Headers
+- `Authorization`, `Content-Type`, `X-Requested-With`
+
+## Security Considerations
+
+### Data Protection
+- All sensitive data encrypted at rest
+- TLS 1.3 for all communications
+- JWT tokens with limited lifetime (1 hour)
+- Refresh tokens stored securely
+
+### Privacy
+- Student data anonymized where possible
+- GDPR compliant data handling
+- Right to deletion of personal data
+- Data retention policies clearly defined
+
+## Client Implementation Guidelines
+
+### JavaScript Client Example
+```javascript
+class PersonalizationClient {
+  constructor(baseURL, authToken) {
+    this.baseURL = baseURL;
+    this.authToken = authToken;
+  }
+
+  async getStudentProfile() {
+    const response = await fetch(`${this.baseURL}/student/profile`, {
+      headers: {
+        'Authorization': `Bearer ${this.authToken}`,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return response.json();
+  }
+
+  async updatePersonalizationSettings(settings) {
+    const response = await fetch(`${this.baseURL}/student/profile`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${this.authToken}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ personalizationSettings: settings })
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return response.json();
+  }
+}
+```
+
+## Performance Expectations
+
+### Response Times
+- **GET requests**: < 200ms (95th percentile)
+- **POST/PUT requests**: < 500ms (95th percentile)
+- **Complex personalization**: < 1000ms (95th percentile)
+
+### Availability
+- **Uptime SLA**: 99.9%
+- **Maintenance windows**: Scheduled during low-usage periods
+- **Rollback procedures**: Automated rollback for failed deployments
+
+## Versioning
+
+### API Versioning
+- Version specified in URL: `/v1/content/chapter/{id}`
+- Backwards compatibility maintained for 6 months after new version
+- Deprecation notices provided 3 months in advance
+
+## Testing Endpoints
+
+### Health Check
+**Endpoint**: `GET /health`
+
+**Description**: Check API health status.
+
+**Response**:
+```json
+{
+  "status": "healthy",
+  "timestamp": "ISO 8601 timestamp",
+  "version": "string"
+}
+```
+
+### API Documentation
+**Endpoint**: `GET /docs`
+
+**Description**: Access interactive API documentation.
+
+**Response**: OpenAPI/Swagger documentation interface
+
+## Migration and Compatibility
+
+### From Previous Versions
+- Profile data automatically migrated
+- Settings preserved during updates
+- Content adaptation algorithms improved progressively
+- Backward compatibility for all essential endpoints
+
+This API specification enables personalized learning experiences that adapt to each student's skill level, learning preferences, and progress, supporting the Physical AI & Humanoid Robotics course's goal of serving diverse student populations with varying backgrounds and skill levels.

@@ -1,0 +1,68 @@
+# ROS 2 Nodes and Topics Diagram
+
+## Simple Publisher-Subscriber Example
+
+```
+┌─────────────────┐                    ┌─────────────────┐
+│   Publisher     │                    │   Subscriber    │
+│   Node          │                    │   Node          │
+│                 │                    │                 │
+│  ┌───────────┐  │    Topic: /topic   │  ┌───────────┐  │
+│  │ Timer     │  │ ─────────────────▶ │  │ Callback  │  │
+│  │ Callback  │  │                    │  │ Function│  │
+│  └───────────┘  │                    │  └───────────┘  │
+│                 │                    │                 │
+│  ┌───────────┐  │    Message:        │  ┌───────────┐  │
+│  │ Publisher │  │ ◀───────────────── │  │ Subscriber│  │
+│  │ Interface │  │  "Hello World: X"  │  │ Interface │  │
+│  └───────────┘  │                    │  └───────────┘  │
+└─────────────────┘                    └─────────────────┘
+        │                                        │
+        │ Publishes String messages              │ Subscribes to String messages
+        └────────────────────────────────────────┘
+```
+
+## More Complex Example: Humanoid Robot
+
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│  Joint Sensors  │    │  Perception     │    │  Motion         │
+│  Node           │    │  Node           │    │  Controller     │
+│                 │    │                 │    │  Node           │
+│  Publishes      │    │  Publishes      │    │  Subscribes to  │
+│  /joint_states  │───▶│  /image_raw     │───▶│  /joint_commands│
+│                 │    │                 │    │                 │
+│  Subscribes to  │    │  Subscribes to  │    │  Publishes      │
+│  /joint_commands│◀───│  /joint_states  │◀───│  /joint_states  │
+│                 │    │                 │    │                 │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+         │                        │                       │
+         └────────────────────────┼───────────────────────┘
+                                  │
+                         ┌─────────────────┐
+                         │  Robot State    │
+                         │  Node           │
+                         │                 │
+                         │  Subscribes to: │
+                         │  - /joint_states│
+                         │  - /image_raw   │
+                         │                 │
+                         │  Publishes:     │
+                         │  - /robot_state │
+                         └─────────────────┘
+```
+
+## Topic Characteristics
+
+- **Asynchronous**: Publisher doesn't wait for subscriber
+- **Unidirectional**: Data flows from publisher to subscriber
+- **Many-to-many**: Multiple publishers and subscribers per topic
+- **Typed**: All messages on a topic have the same type
+- **Named**: Topics have unique string names (e.g., "/sensor/data")
+
+## Quality of Service (QoS) Settings
+
+- **Reliability**: Best effort vs. reliable delivery
+- **Durability**: Volatile vs. transient local
+- **History**: Keep all vs. keep last N messages
+- **Depth**: Queue size for outgoing messages

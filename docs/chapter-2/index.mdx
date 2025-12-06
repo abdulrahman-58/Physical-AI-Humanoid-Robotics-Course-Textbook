@@ -1,0 +1,107 @@
+---
+title: 'Chapter 2: Isaac Sim Setup and Simulation Concepts'
+description: 'Introduction to NVIDIA Isaac Sim for robot simulation and digital twin creation'
+tags: [intermediate, isaac, simulation, digital-twin, robotics]
+sidebar_position: 1
+---
+
+# Chapter 2: Isaac Sim Setup and Simulation Concepts
+
+<DifficultyIndicator level="intermediate" />
+
+<PersonalizationPanel
+  initialSettings={{
+    difficultyFilter: 'intermediate',
+    learningPath: 'practical',
+    showAdvancedContent: false,
+    showSimplifiedExplanations: true,
+    includeAdditionalExamples: true,
+    highlightKeyConcepts: true
+  }}
+  studentProfile={{
+    skillLevel: 'intermediate',
+    preferredLearningPath: 'practical'
+  }}
+/>
+
+Welcome to Chapter 2! This chapter introduces you to NVIDIA Isaac Sim, a powerful simulation environment for robotics development. Isaac Sim enables you to create digital twins of robots and environments, allowing you to test and validate your robotic systems before deploying them on real hardware.
+
+## Learning Objectives
+
+After completing this chapter, you will be able to:
+- [ ] Install and configure NVIDIA Isaac Sim 2025
+- [ ] Understand the core concepts of physics-based simulation
+- [ ] Create and manipulate robot models in Isaac Sim
+- [ ] Set up simulation environments with realistic physics
+- [ ] Connect Isaac Sim with ROS 2 for robot control
+- [ ] Validate robot behaviors in simulation before real-world deployment
+
+## Prerequisites
+
+Before starting this chapter, you should:
+- [ ] Complete Chapter 1: ROS 2 Basics
+- [ ] Have a working ROS 2 Kilted Kaiju installation
+- [ ] Have access to an RTX 4070 Ti or equivalent GPU
+- [ ] Have Ubuntu 22.04 with compatible NVIDIA drivers installed
+
+## Chapter Overview
+
+NVIDIA Isaac Sim is a comprehensive simulation environment built on NVIDIA Omniverse technology. It provides:
+
+- **High-fidelity physics simulation**: Accurate modeling of real-world physics
+- **Photorealistic rendering**: High-quality visual simulation
+- **ROS 2 integration**: Seamless connection with ROS 2 ecosystems
+- **Digital twin capabilities**: Creation of virtual replicas of real systems
+- **AI training environments**: Safe spaces to train and test AI models
+
+In this chapter, we'll cover:
+1. Installing and configuring Isaac Sim
+2. Understanding simulation concepts and physics
+3. Creating robot models and environments
+4. Connecting simulation to ROS 2
+5. Practical lab exercises to reinforce learning
+
+## Why Simulation Matters for Humanoid Robotics
+
+Simulation is particularly crucial for humanoid robotics development because:
+
+1. **Safety**: Test behaviors in a safe virtual environment before real-world deployment
+2. **Cost-effectiveness**: Reduce the need for expensive physical prototypes
+3. **Repeatability**: Run the same experiments multiple times with consistent conditions
+4. **Speed**: Accelerate development by running simulations faster than real-time
+5. **Variety**: Test in diverse environments and conditions that might be hard to access physically
+
+## Isaac Sim Architecture
+
+Isaac Sim is built on NVIDIA Omniverse, which provides:
+
+- **USD (Universal Scene Description)**: For scene representation and collaboration
+- **PhysX**: For high-fidelity physics simulation
+- **RTX rendering**: For photorealistic visualization
+- **Omniverse Nucleus**: For multi-user collaboration
+- **Connectors**: For integration with external tools like ROS 2
+
+The architecture enables Isaac Sim to serve as a digital twin platform where virtual robots can be developed, tested, and validated before deployment to physical systems.
+
+## Connecting Isaac Sim with ROS 2
+
+Isaac Sim provides excellent integration with ROS 2 through:
+
+- **Isaac ROS**: A collection of perception and navigation packages
+- **ROS 2 Bridge**: For real-time communication between Isaac Sim and ROS 2 nodes
+- **URDF support**: For importing robot models from ROS 1/2 ecosystems
+- **Message synchronization**: For consistent timing between simulation and control
+
+This integration allows you to use the same ROS 2 nodes you developed in Chapter 1 to control robots in simulation.
+
+## Chapter Structure
+
+This chapter is organized as follows:
+1. **Isaac Sim Setup**: Installation and initial configuration
+2. **Simulation Concepts**: Understanding physics and digital twin principles
+3. **Practical Implementation**: Creating and controlling robots in simulation
+4. **Lab Exercise**: Hands-on experience with Isaac Sim and ROS 2 integration
+
+## What's Next
+
+After mastering Isaac Sim in this chapter, you'll be ready to move to Chapter 3, where we'll explore robot control theory and implement controllers that can work both in simulation and on real hardware. The skills you develop here will be essential for testing and validating the humanoid robot behaviors you'll develop throughout the course.

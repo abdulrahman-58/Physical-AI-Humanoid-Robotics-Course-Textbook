@@ -1,0 +1,199 @@
+.difficultyFilterContainer {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.filterHeader {
+  margin-bottom: 1.5rem;
+}
+
+.filterTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #495057;
+  margin: 0 0 0.5rem 0;
+}
+
+.filterDescription {
+  color: #6c757d;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.difficultyButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.difficultyButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  font-size: 0.9rem;
+  background-color: #e9ecef;
+  color: #495057;
+}
+
+.difficultyButton:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.difficultyButton.active {
+  border-width: 2px;
+  font-weight: 600;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.difficulty-all.active {
+  border-color: #6c757d;
+  background-color: #6c757d;
+  color: white;
+}
+
+.difficulty-beginner {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.difficulty-beginner.active {
+  border-color: #28a745;
+  background-color: #28a745;
+  color: white;
+}
+
+.difficulty-intermediate {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.difficulty-intermediate.active {
+  border-color: #ffc107;
+  background-color: #ffc107;
+  color: #856404;
+}
+
+.difficulty-advanced {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.difficulty-advanced.active {
+  border-color: #dc3545;
+  background-color: #dc3545;
+  color: white;
+}
+
+.difficultyIcon {
+  font-size: 1.1em;
+}
+
+.difficultyLabel {
+  font-weight: inherit;
+}
+
+.selectedIndicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background-color: #e9ecef;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.indicatorLabel {
+  color: #6c757d;
+  font-weight: 500;
+}
+
+.currentDifficulty {
+  font-weight: 600;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  text-transform: capitalize;
+}
+
+.current-all {
+  background-color: #6c757d;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.current-beginner {
+  background-color: #28a745;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.current-intermediate {
+  background-color: #ffc107;
+  color: #856404;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.current-advanced {
+  background-color: #dc3545;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.skeleton {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .difficultyFilterContainer {
+    padding: 1rem;
+  }
+
+  .difficultyButtons {
+    flex-direction: column;
+  }
+
+  .difficultyButton {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .selectedIndicator {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+}

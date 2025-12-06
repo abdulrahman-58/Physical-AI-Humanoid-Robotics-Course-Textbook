@@ -1,0 +1,149 @@
+---
+title: 'Week 1 Content Validation'
+description: 'Testing procedures for Week 1 content on RTX 4070 Ti + Ubuntu 22.04 setup'
+tags: [testing, validation, ros2, setup]
+sidebar_position: 1
+---
+
+# Week 1 Content Validation
+
+<DifficultyIndicator level="beginner" />
+
+This document outlines the validation procedures for Week 1 content to ensure it works correctly on the target hardware setup: RTX 4070 Ti + Ubuntu 22.04.
+
+## Hardware Requirements
+
+- **GPU**: RTX 4070 Ti (or equivalent)
+- **OS**: Ubuntu 22.04 LTS
+- **RAM**: 16GB minimum (32GB recommended)
+- **Storage**: 50GB free space for ROS 2 and Isaac Sim
+- **Processor**: Multi-core processor (Intel i7 or AMD Ryzen equivalent)
+
+## Prerequisites Verification
+
+Before testing Week 1 content, verify that your system meets these requirements:
+
+### 1. Ubuntu 22.04 Verification
+```bash
+lsb_release -a
+```
+Expected output should show Ubuntu 22.04.x LTS.
+
+### 2. ROS 2 Installation Verification
+```bash
+source /opt/ros/rolling/setup.bash
+ros2 --version
+```
+Expected output: `ros2 foxy` or later version (Kilted Kaiju).
+
+### 3. Python 3.10+ Verification
+```bash
+python3 --version
+```
+Expected output: Python 3.10 or higher.
+
+## Week 1 Content Tests
+
+### Test 1: Basic ROS 2 Commands
+**Objective**: Verify basic ROS 2 functionality
+
+**Steps**:
+1. Open a terminal
+2. Source ROS 2: `source /opt/ros/rolling/setup.bash`
+3. Run: `ros2 topic list`
+4. Run: `ros2 node list`
+
+**Expected Results**:
+- No errors should occur
+- Commands should execute successfully
+- Should show available topics/nodes (even if empty initially)
+
+### Test 2: Publisher/Subscriber Example
+**Objective**: Verify the publisher and subscriber example from Lab 1 works
+
+**Steps**:
+1. Create a test workspace:
+   ```bash
+   mkdir -p ~/test_ws/src
+   cd ~/test_ws
+   ```
+2. Copy the publisher_example.py and subscriber_example.py files to a new package
+3. Build the package: `colcon build --packages-select my_robot_tutorials`
+4. Source the workspace: `source install/setup.bash`
+5. In terminal 1: `ros2 run my_robot_tutorials talker`
+6. In terminal 2: `ros2 run my_robot_tutorials listener`
+
+**Expected Results**:
+- Publisher should output "Publishing: 'Hello World: X'" every 0.5 seconds
+- Subscriber should output "I heard: 'Hello World: X'" in response
+- Messages should match between publisher and subscriber
+
+### Test 3: ROS 2 Tools Verification
+**Objective**: Verify ROS 2 monitoring tools work
+
+**Steps**:
+1. With the publisher/subscriber running, open a third terminal
+2. Source ROS 2: `source /opt/ros/rolling/setup.bash`
+3. Run: `ros2 node list`
+4. Run: `ros2 topic list`
+5. Run: `ros2 topic echo /topic std_msgs/msg/String`
+
+**Expected Results**:
+- Should see both 'minimal_publisher' and 'minimal_subscriber' nodes
+- Should see '/topic' in the topic list
+- Should see the same messages being published by the talker node
+
+### Test 4: Code Validation Script
+**Objective**: Verify the validation script works correctly
+
+**Steps**:
+1. Navigate to the code examples directory
+2. Run the validation script: `python3 validate_examples.py`
+
+**Expected Results**:
+- Script should run without errors
+- Should report "All ROS 2 examples passed validation!"
+
+## Troubleshooting Common Issues
+
+### Issue 1: "Command 'ros2' not found"
+**Symptoms**: ROS 2 commands return "command not found"
+**Solution**:
+- Verify ROS 2 installation: `ls /opt/ros/rolling/`
+- Source the setup file: `source /opt/ros/rolling/setup.bash`
+- Add to shell profile: `echo "source /opt/ros/rolling/setup.bash" >> ~/.bashrc`
+
+### Issue 2: Publisher/Subscriber not communicating
+**Symptoms**: Publisher runs but subscriber doesn't receive messages
+**Solution**:
+- Ensure both terminals have sourced the workspace
+- Check ROS_DOMAIN_ID is the same in both terminals: `echo $ROS_DOMAIN_ID`
+- Verify topic names match exactly
+
+### Issue 3: Python import errors
+**Symptoms**: "ModuleNotFoundError" for rclpy or std_msgs
+**Solution**:
+- Verify ROS 2 Python packages are installed: `pip3 list | grep ros`
+- Install missing packages: `sudo apt install python3-ros-interfaces`
+
+## Performance Expectations
+
+### Expected Performance on RTX 4070 Ti + Ubuntu 22.04:
+- ROS 2 commands should execute in < 1 second
+- Publisher/Subscriber communication should have < 100ms latency
+- Memory usage should remain stable during extended runs
+- CPU usage should be moderate (20-40%) for basic examples
+
+## Success Criteria
+
+Week 1 content validation is successful if:
+- [ ] All basic ROS 2 commands execute without errors
+- [ ] Publisher/Subscriber example runs correctly
+- [ ] ROS 2 tools can monitor the communication
+- [ ] Code validation script passes
+- [ ] No crashes or unexpected behavior occurs
+- [ ] Performance meets expectations
+
+## Next Steps
+
+Once Week 1 content validation is complete, proceed to Week 2 content validation which will include Isaac Sim integration tests.

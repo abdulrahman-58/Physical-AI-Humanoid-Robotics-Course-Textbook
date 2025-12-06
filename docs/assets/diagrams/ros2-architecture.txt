@@ -1,0 +1,58 @@
+# ROS 2 Architecture Diagram
+
+## Core Components
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    ROS 2 Ecosystem                              │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐        │
+│  │   Node A    │    │   Node B    │    │   Node C    │        │
+│  │             │    │             │    │             │        │
+│  │ Publisher   │    │ Subscriber  │    │ Service     │        │
+│  │             │    │             │    │ Server      │        │
+│  └─────────────┘    └─────────────┘    └─────────────┘        │
+│         │                   │                   │              │
+│         │ publishes         │ subscribes        │ provides     │
+│         ▼ to topic          ▲ from topic        ▲ service      │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐ │
+│  │   Topic:        │  │   Topic:        │  │   Service:      │ │
+│  │   /sensor_data  │  │   /sensor_data  │  │   /move_robot   │ │
+│  └─────────────────┘  └─────────────────┘  └─────────────────┘ │
+│                                                                 │
+│  ┌─────────────────────────────────────────────────────────────┐│
+│  │                    DDS/RMW Layer                           ││
+│  │  (Data Distribution Service / ROS Middleware)              ││
+│  │  - Handles message transport                               ││
+│  │  - Provides Quality of Service settings                    ││
+│  │  - Manages network communication                           ││
+│  └─────────────────────────────────────────────────────────────┘│
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+## Communication Patterns
+
+### 1. Publish/Subscribe (Topics)
+- Asynchronous communication
+- Many-to-many relationship
+- Data-driven (publishers don't wait for subscribers)
+
+### 2. Request/Response (Services)
+- Synchronous communication
+- One-to-one relationship
+- Action-oriented (request completion)
+
+### 3. Goal-Oriented (Actions)
+- Long-running tasks with feedback
+- Cancelable operations
+- Progress reporting
+
+## Key Features
+
+- **Distributed**: Nodes can run on different machines
+- **Language Agnostic**: Support for Python, C++, etc.
+- **Real-time Capable**: Deterministic communication
+- **Secure**: Built-in authentication and encryption
+- **Cross-platform**: Works on Linux, Windows, macOS, RTOS

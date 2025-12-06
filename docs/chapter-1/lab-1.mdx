@@ -1,0 +1,290 @@
+---
+title: 'Lab 1: Your First ROS 2 Publisher and Subscriber'
+description: 'Create and run your first ROS 2 publisher and subscriber nodes'
+tags: [beginner, ros2, lab, publisher, subscriber, python]
+sidebar_position: 4
+---
+
+# Lab 1: Your First ROS 2 Publisher and Subscriber
+
+<DifficultyIndicator level="beginner" />
+
+<PersonalizationPanel
+  initialSettings={{
+    difficultyFilter: 'beginner',
+    learningPath: 'practical',
+    showAdvancedContent: false,
+    showSimplifiedExplanations: true,
+    includeAdditionalExamples: true,
+    highlightKeyConcepts: true
+  }}
+  studentProfile={{
+    skillLevel: 'beginner',
+    preferredLearningPath: 'practical'
+  }}
+/>
+
+In this lab, you'll create your first ROS 2 publisher and subscriber nodes. This is a fundamental exercise that demonstrates the publish/subscribe communication pattern that forms the backbone of ROS 2.
+
+## Learning Objectives
+
+After completing this lab, you will be able to:
+- [ ] Create a ROS 2 workspace and package
+- [ ] Write a simple publisher node that sends messages
+- [ ] Write a simple subscriber node that receives messages
+- [ ] Run and test the publisher-subscriber system
+- [ ] Use ROS 2 tools to monitor the communication
+
+## Prerequisites
+
+Before starting this lab, you should:
+- [ ] Complete the ROS 2 basics sections
+- [ ] Have ROS 2 Kilted Kaiju installed and working
+- [ ] Be comfortable with basic Linux commands
+- [ ] Have Python 3.10+ installed
+
+## Creating Your ROS 2 Workspace
+
+First, let's create a workspace for our custom packages:
+
+```bash
+# Create the workspace directory
+mkdir -p ~/ros2_ws/src
+cd ~/ros2_ws
+
+# Source ROS 2
+source /opt/ros/rolling/setup.bash
+```
+
+## Creating a Package
+
+Now let's create a package for our lab:
+
+```bash
+cd ~/ros2_ws/src
+ros2 pkg create --build-type ament_python my_robot_tutorials
+cd my_robot_tutorials
+```
+
+This creates a basic Python package structure. The package will contain our publisher and subscriber nodes.
+
+## Writing the Publisher Node
+
+Create the publisher script at `my_robot_tutorials/my_robot_tutorials/publisher_member_function.py`:
+
+```python
+import rclpy
+from rclpy.node import Node
+from std_msgs.msg import String
+
+
+class MinimalPublisher(Node):
+
+    def __init__(self):
+        super().__init__('minimal_publisher')
+        self.publisher_ = self.create_publisher(String, 'topic', 10)
+        timer_period = 0.5  # seconds
+        self.timer = self.create_timer(timer_period, self.timer_callback)
+        self.i = 0
+
+    def timer_callback(self):
+        msg = String()
+        msg.data = f'Hello World: {self.i}'
+        self.publisher_.publish(msg)
+        self.get_logger().info(f'Publishing: "{msg.data}"')
+        self.i += 1
+
+
+def main(args=None):
+    rclpy.init(args=args)
+
+    minimal_publisher = MinimalPublisher()
+
+    try:
+        rclpy.spin(minimal_publisher)
+    except KeyboardInterrupt:
+        pass
+    finally:
+        minimal_publisher.destroy_node()
+        rclpy.shutdown()
+
+
+if __name__ == '__main__':
+    main()
+```
+
+## Writing the Subscriber Node
+
+Create the subscriber script at `my_robot_tutorials/my_robot_tutorials/subscriber_member_function.py`:
+
+```python
+import rclpy
+from rclpy.node import Node
+from std_msgs.msg import String
+
+
+class MinimalSubscriber(Node):
+
+    def __init__(self):
+        super().__init__('minimal_subscriber')
+        self.subscription = self.create_subscription(
+            String,
+            'topic',
+            self.listener_callback,
+            10)
+        self.subscription  # prevent unused variable warning
+
+    def listener_callback(self, msg):
+        self.get_logger().info(f'I heard: "{msg.data}"')
+
+
+def main(args=None):
+    rclpy.init(args=args)
+
+    minimal_subscriber = MinimalSubscriber()
+
+    try:
+        rclpy.spin(minimal_subscriber)
+    except KeyboardInterrupt:
+        pass
+    finally:
+        minimal_subscriber.destroy_node()
+        rclpy.shutdown()
+
+
+if __name__ == '__main__':
+    main()
+```
+
+## Updating the Package Configuration
+
+You need to update the `setup.py` file to make your nodes executable:
+
+```python
+import os
+from glob import glob
+from setuptools import setup
+
+from setuptools import find_packages
+
+package_name = 'my_robot_tutorials'
+
+setup(
+    name=package_name,
+    version='0.0.0',
+    packages=find_packages(exclude=['test']),
+    data_files=[
+        ('share/ament_index/resource_index/packages',
+            ['resource/' + package_name]),
+        ('share/' + package_name, ['package.xml']),
+    ],
+    install_requires=['setuptools'],
+    zip_safe=True,
+    maintainer='your_name',
+    maintainer_email='your_email@example.com',
+    description='TODO: Package description',
+    license='TODO: License declaration',
+    tests_require=['pytest'],
+    entry_points={
+        'console_scripts': [
+            'talker = my_robot_tutorials.publisher_member_function:main',
+            'listener = my_robot_tutorials.subscriber_member_function:main',
+        ],
+    },
+)
+```
+
+## Building the Package
+
+```bash
+cd ~/ros2_ws
+source /opt/ros/rolling/setup.bash
+colcon build --packages-select my_robot_tutorials
+```
+
+## Running the Publisher and Subscriber
+
+Now let's run our nodes in separate terminals:
+
+**Terminal 1 (Publisher):**
+```bash
+cd ~/ros2_ws
+source install/setup.bash
+ros2 run my_robot_tutorials talker
+```
+
+**Terminal 2 (Subscriber):**
+```bash
+cd ~/ros2_ws
+source install/setup.bash
+ros2 run my_robot_tutorials listener
+```
+
+You should see the publisher sending messages and the subscriber receiving them!
+
+## Monitoring with ROS 2 Tools
+
+While your nodes are running, open a third terminal and try these commands:
+
+```bash
+# List active nodes
+ros2 node list
+
+# List active topics
+ros2 topic list
+
+# Echo messages on the topic
+ros2 topic echo /topic std_msgs/msg/String
+
+# Check the topic info
+ros2 topic info /topic
+```
+
+## Expected Results
+
+- The publisher should output messages like "Publishing: 'Hello World: X'" every 0.5 seconds
+- The subscriber should output messages like "I heard: 'Hello World: X'" in response
+- The `ros2 topic echo` command should show the same messages being transmitted
+
+## Troubleshooting
+
+### Common Issues and Solutions
+
+**Issue**: "Command 'ros2' not found"
+- **Solution**: Make sure you've sourced ROS 2: `source /opt/ros/rolling/setup.bash`
+
+**Issue**: "ModuleNotFoundError" when running nodes
+- **Solution**: Ensure you've built the package with `colcon build` and sourced the workspace: `source install/setup.bash`
+
+**Issue**: Publisher and subscriber not communicating
+- **Solution**: Make sure both terminals have sourced the workspace and are using the same ROS domain ID
+
+**Issue**: "ament_python" build type not recognized
+- **Solution**: Make sure you have python3-colcon-common-extensions installed: `sudo apt install python3-colcon-common-extensions`
+
+## Extending the Example
+
+Try modifying the publisher to:
+- Change the message content (e.g., publish sensor values)
+- Adjust the publishing frequency
+- Add timestamp information to the messages
+
+Try modifying the subscriber to:
+- Process the received data in some way
+- Log the received messages to a file
+- Count and display statistics about received messages
+
+## Summary
+
+In this lab, you've successfully created and run your first ROS 2 publisher and subscriber nodes. You've learned how to:
+
+- Create a ROS 2 workspace and package
+- Write simple publisher and subscriber nodes
+- Build and run ROS 2 nodes
+- Use ROS 2 tools to monitor communication
+
+This foundational knowledge is essential for building more complex robotic systems, especially humanoid robots that require coordination between many different subsystems.
+
+## Next Steps
+
+Now that you understand the basics of ROS 2 communication, continue to the next chapter where we'll explore Isaac Sim for robot simulation. You'll learn how to simulate humanoid robots and test your ROS 2 nodes in a virtual environment before deploying them on real hardware.

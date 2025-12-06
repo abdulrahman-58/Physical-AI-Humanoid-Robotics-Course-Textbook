@@ -1,0 +1,168 @@
+---
+title: 'Hardware Setup Guide'
+description: 'Detailed hardware recommendations for the Physical AI course'
+tags: [beginner, hardware, setup, jetson, unitree]
+sidebar_position: 2
+---
+
+# Hardware Setup Guide
+
+<DifficultyIndicator level="beginner" />
+
+<PersonalizationPanel
+  initialSettings={{
+    difficultyFilter: 'beginner',
+    learningPath: 'practical',
+    showAdvancedContent: false,
+    showSimplifiedExplanations: true,
+    includeAdditionalExamples: true,
+    highlightKeyConcepts: true
+  }}
+  studentProfile={{
+    skillLevel: 'beginner',
+    preferredLearningPath: 'practical'
+  }}
+/>
+
+This guide provides detailed recommendations for the hardware needed to follow along with this textbook. We've carefully selected components that provide the best balance of performance, cost, and accessibility for educational purposes in 2025.
+
+## Computing Platform
+
+### Primary Recommendation: Jetson Orin Nano Super
+- **Model**: Jetson Orin Nano Super Developer Kit
+- **Price (2025)**: $249
+- **Specifications**:
+  - 2.0 GHz ARM A78AE (ARM v8.2) 6-core processor
+  - 1024-core NVIDIA Ampere™ architecture GPU
+  - 8GB LPDDR5 memory
+  - 512GB eMMC 5.1 storage
+  - 2x 22-pin expansion headers
+- **Why**: Optimized for AI workloads, perfect for running Isaac Sim and ROS 2
+
+### Alternative Computing Options
+- **NVIDIA Jetson AGX Orin**: More powerful but significantly more expensive ($1,000+)
+- **Intel NUC with RTX 4070**: More general-purpose but less optimized for robotics
+
+## Robot Platforms
+
+### Primary Recommendation: Unitree G1
+- **Model**: Unitree G1 Humanoid Robot
+- **Price (2025)**: $16,000
+- **Specifications**:
+  - 32 DOF (Degrees of Freedom)
+  - 1.1m height, 13.2kg weight
+  - Max speed: 3.2 m/s
+  - Advanced perception system
+  - ROS 2 compatibility
+- **Why**: Most accessible humanoid platform for educational use
+
+### Alternative Robot Platforms
+- **Unitree H1**: More advanced but more expensive ($20,000+)
+- **Boston Dynamics Spot**: Excellent but very expensive ($74,000+) - not recommended for educational use
+
+## Sensors and Perception
+
+### Primary Recommendation: Intel RealSense D435i
+- **Model**: Intel RealSense Depth Camera D435i
+- **Price (2025)**: $238
+- **Specifications**:
+  - Depth sensing: 1280×720 at 30/60/90 FPS
+  - RGB sensing: 1920×1080 at 30 FPS
+  - Integrated IMU (gyroscope and accelerometer)
+  - 94° × 65° × 100° field of view
+- **Why**: Excellent depth sensing capabilities, ROS 2 integration, reasonable price
+
+### Alternative Sensors
+- **StereoLabs ZED 2i**: More expensive but higher quality depth sensing ($500+)
+
+## Computer for Simulation Development
+
+### Recommended: RTX 4070 Ti System
+- **GPU**: NVIDIA RTX 4070 Ti (12GB VRAM)
+- **CPU**: AMD Ryzen 7 7800X3D or Intel i7-13700K
+- **RAM**: 32GB DDR5
+- **Storage**: 1TB NVMe SSD
+- **OS**: Ubuntu 22.04 LTS
+- **Price (2025)**: $2,500-3,000
+- **Why**: Sufficient power to run Isaac Sim simulations alongside ROS 2 nodes
+
+## Budget-Conscious Alternatives
+
+### For Students with Limited Budget
+- **GPU**: RTX 4060 Ti 16GB ($400-500) - reduced simulation performance
+- **Alternative**: Use cloud computing services (AWS, Google Cloud) with GPU instances
+- **Robot Platform**: Consider simulation-only approach initially
+
+### Entry-Level Setup (Simulation Only)
+- **Computer**: Any modern system with 16GB RAM and dedicated GPU (RTX 3060 or better)
+- **Price**: $1,000-1,500
+- **Note**: This setup allows you to complete all simulation-based exercises
+
+## Installation and Setup
+
+### Ubuntu 22.04 LTS
+1. Download Ubuntu 22.04 LTS from [ubuntu.com](https://ubuntu.com/download/desktop)
+2. Create a bootable USB drive using Rufus (Windows) or `dd` command (Linux/Mac)
+3. Boot from USB and install Ubuntu with at least 100GB of free space allocated
+
+### ROS 2 Kilted Kaiju Installation
+```bash
+# Add ROS 2 repository
+sudo apt update && sudo apt install curl gnupg lsb-release
+curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key | sudo gpg --dearmor -o /usr/share/keyrings/ros-archive-keyring.gpg
+
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(source /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
+
+sudo apt update
+sudo apt install ros-rolling-desktop
+sudo apt install python3-rosdep python3-rosinstall python3-rosinstall-generator python3-pip
+```
+
+### Isaac Sim Setup
+1. Download Isaac Sim 2025 from NVIDIA Developer website
+2. Ensure NVIDIA drivers are compatible (535.0 or later recommended)
+3. Follow the official installation guide for Ubuntu 22.04
+
+<LabExercise
+  title="Hardware Verification Lab"
+  objectives={[
+    "Verify all hardware components are properly connected",
+    "Test basic system functionality",
+    "Confirm ROS 2 and Isaac Sim installations"
+  ]}
+  prerequisites={[
+    "Hardware components acquired",
+    "Ubuntu 22.04 installed",
+    "Internet connection"
+  ]}
+  steps={[
+    "Verify GPU is detected: `nvidia-smi`",
+    "Check system memory: `free -h`",
+    "Verify Ubuntu version: `lsb_release -a`",
+    "Test ROS 2 installation: `source /opt/ros/rolling/setup.bash && ros2 --version`"
+  ]}
+  expectedOutcome="All commands should execute without errors and show proper system information"
+  troubleshootingTips={[
+    "If nvidia-smi fails, check GPU drivers installation",
+    "If ROS 2 command not found, verify installation and environment sourcing",
+    "Ensure you have proper permissions for hardware access"
+  ]}
+/>
+
+## Troubleshooting Common Issues
+
+### GPU Not Detected
+- **Problem**: `nvidia-smi` command not found or no GPU listed
+- **Solution**: Verify NVIDIA drivers are properly installed; check if secure boot is disabled in BIOS
+
+### ROS 2 Installation Issues
+- **Problem**: ROS 2 commands not found after installation
+- **Solution**: Ensure you source the setup file in your shell profile (`~/.bashrc` or `~/.zshrc`)
+
+### Isaac Sim Performance Issues
+- **Problem**: Slow simulation or rendering problems
+- **Solution**: Check that your GPU meets minimum requirements; update drivers to latest version
+
+## Next Steps
+
+Once your hardware is set up, proceed to Chapter 1: ROS 2 Basics, where you'll learn the fundamental concepts of robot communication and control.

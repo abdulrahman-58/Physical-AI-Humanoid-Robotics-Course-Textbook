@@ -1,0 +1,111 @@
+---
+title: 'Introduction to Physical AI & Humanoid Robotics'
+description: 'Welcome to the Physical AI & Humanoid Robotics textbook'
+tags: [beginner, introduction, overview]
+sidebar_position: 1
+---
+
+# Introduction to Physical AI & Humanoid Robotics
+
+<DifficultyIndicator level="beginner" />
+
+<PersonalizationPanel
+  initialSettings={{
+    difficultyFilter: 'beginner',
+    learningPath: 'mixed',
+    showAdvancedContent: false,
+    showSimplifiedExplanations: true,
+    includeAdditionalExamples: true,
+    highlightKeyConcepts: true
+  }}
+  studentProfile={{
+    skillLevel: 'beginner',
+    preferredLearningPath: 'mixed'
+  }}
+/>
+
+Welcome to the Physical AI & Humanoid Robotics textbook! This comprehensive guide will take you from zero to developing fully autonomous simulated humanoid robots using cutting-edge technologies.
+
+## What You'll Learn
+
+In this textbook, you will:
+- Master ROS 2 (Robot Operating System 2) for robot communication and control
+- Use NVIDIA Isaac Sim for advanced robot simulation and testing
+- Integrate Vision-Language-Action (VLA) models for intelligent robot behavior
+- Build and control humanoid robots in simulation and eventually in the real world
+
+## Course Structure
+
+This textbook follows a 13-week curriculum with 7 core chapters:
+
+1. **ROS 2 Basics** - Learn the fundamentals of robot communication
+2. **Isaac Sim Setup** - Master simulation environments for robot development
+3. **Robot Control Theory** - Understand how to make robots move
+4. **Perception Systems** - Teach robots to see and understand their environment
+5. **Vision-Language-Action Integration** - Connect perception with intelligent action
+6. **Humanoid Locomotion** - Make humanoid robots walk and move naturally
+7. **Capstone Project** - Build a fully autonomous humanoid robot
+
+## Hardware Requirements
+
+To get the most out of this textbook, you'll need:
+
+<details>
+<summary>Recommended Hardware Setup</summary>
+
+- **Computer**: RTX 4070 Ti or equivalent GPU
+- **OS**: Ubuntu 22.04 LTS
+- **RAM**: 32GB recommended
+- **Storage**: 100GB free space
+
+For physical robot experimentation:
+- **Robot Platform**: Unitree G1 (or similar humanoid platform)
+- **Computing**: Jetson Orin Nano Super
+- **Sensors**: Intel RealSense D435i depth camera
+</details>
+
+## Getting Started
+
+Before diving into the content, make sure you have:
+1. A properly configured Ubuntu 22.04 system
+2. ROS 2 Kilted Kaiju installed
+3. NVIDIA Isaac Sim 2025 set up with compatible drivers
+4. This textbook repository cloned and dependencies installed
+
+## Learning Approach
+
+This textbook follows a hands-on approach where theory is immediately followed by practical implementation. Each chapter includes:
+
+- Core concepts and theory
+- Step-by-step tutorials
+- Lab exercises to reinforce learning
+- Troubleshooting guides for common issues
+
+<LabExercise
+  title="Getting Started Lab"
+  objectives={[
+    "Verify your development environment is properly set up",
+    "Run your first ROS 2 command",
+    "Confirm Isaac Sim is accessible"
+  ]}
+  prerequisites={[
+    "Ubuntu 22.04 installed",
+    "ROS 2 Kilted Kaiju installed",
+    "NVIDIA Isaac Sim 2025 installed"
+  ]}
+  steps={[
+    "Open a terminal and source ROS 2: `source /opt/ros/rolling/setup.bash`",
+    "Verify ROS 2 installation: `ros2 --version`",
+    "Check for Isaac Sim installation directory",
+    "Create a test directory: `mkdir ~/physical_ai_test && cd ~/physical_ai_test`"
+  ]}
+  expectedOutcome="You should see the ROS 2 version and have a test directory created"
+  troubleshootingTips={[
+    "If `ros2` command is not found, ensure you've sourced the ROS 2 environment in your shell profile",
+    "If Isaac Sim is not found, verify the installation path and permissions"
+  ]}
+/>
+
+## Next Steps
+
+Begin with Chapter 1: ROS 2 Basics, where you'll learn the fundamental concepts of robot communication and control that form the backbone of all modern robotics systems.

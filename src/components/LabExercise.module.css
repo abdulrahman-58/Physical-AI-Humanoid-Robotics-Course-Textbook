@@ -1,0 +1,48 @@
+.labExercise {
+  margin: 1.5rem 0;
+  padding: 1.5rem;
+  border-left: 4px solid #3578e5;
+  background-color: #f8f9fa;
+  border-radius: 0 4px 4px 0;
+}
+
+.labTitle {
+  margin-top: 0;
+  color: #3578e5;
+  font-size: 1.3rem;
+  border-bottom: 1px solid #dee2e6;
+  padding-bottom: 0.5rem;
+}
+
+.section {
+  margin: 1rem 0;
+}
+
+.section h4 {
+  color: #495057;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.troubleshooting {
+  background-color: #fff3cd;
+  padding: 0.8rem;
+  border-radius: 4px;
+  border-left: 3px solid #ffc107;
+}
+
+.codeBlock {
+  background-color: #f6f8fa;
+  border-radius: 6px;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  overflow-x: auto;
+  font-size: 0.9em;
+}
+
+@media (max-width: 768px) {
+  .labExercise {
+    padding: 1rem;
+    margin: 1rem 0;
+  }
+}

@@ -1,0 +1,406 @@
+---
+title: 'Hardware Troubleshooting Guide'
+description: 'Comprehensive troubleshooting guide for hardware setup issues in Physical AI & Humanoid Robotics'
+tags: [troubleshooting, hardware, setup, debugging, issues]
+sidebar_position: 1
+---
+
+# Hardware Troubleshooting Guide
+
+<DifficultyIndicator level="intermediate" />
+
+This comprehensive troubleshooting guide addresses common hardware setup issues for the Physical AI & Humanoid Robotics course. This guide covers troubleshooting for all recommended hardware components: Jetson Orin Nano Super, Unitree G1, Intel RealSense D435i, and development computers.
+
+## General Troubleshooting Approach
+
+### Problem-Solving Framework
+1. **Identify**: Clearly define the problem with specific symptoms
+2. **Isolate**: Determine which component or connection is causing the issue
+3. **Research**: Look up the issue in documentation or community forums
+4. **Test**: Try systematic solutions one at a time
+5. **Verify**: Confirm the solution resolves the issue
+6. **Document**: Record the solution for future reference
+
+### Documentation Required
+Always document your troubleshooting steps:
+- Specific error messages (copy exactly)
+- System configuration at time of issue
+- Steps already attempted
+- Results of each troubleshooting attempt
+
+## Jetson Orin Nano Super Troubleshooting
+
+### Power and Boot Issues
+
+#### Problem: Jetson Won't Power On
+**Symptoms**: No lights, no response to power button
+**Possible Causes**:
+- Faulty power adapter
+- Damaged power cable
+- Defective Jetson board
+- Insufficient power supply
+
+**Solutions**:
+1. **Check Power Adapter**: Verify output is 19V/6.3A (120W) using multimeter
+2. **Inspect Cable**: Check for physical damage to barrel connector
+3. **Try Different Outlet**: Rule out power outlet issues
+4. **Verify Board**: Look for physical damage to power connector
+5. **Test with Known Good Adapter**: If available
+
+**Prevention**: Use only official NVIDIA power adapter, avoid cheap third-party alternatives
+
+#### Problem: Boot Loop or Stuck on Logo
+**Symptoms**: Boots to NVIDIA logo screen and restarts repeatedly
+**Possible Causes**:
+- Corrupted operating system
+- Faulty microSD card
+- Incompatible power supply
+- Overheating issues
+
+**Solutions**:
+1. **Check Power Supply**: Ensure 120W adapter is used
+2. **Reflash OS**: Use SDK Manager to reinstall JetPack
+3. **Replace microSD**: Try with different brand/format
+4. **Cooling**: Ensure proper ventilation and cooling
+5. **Safe Mode**: Hold recovery button during power-on
+
+### USB and Connectivity Issues
+
+#### Problem: USB Devices Not Recognized
+**Symptoms**: Connected USB devices don't appear in system
+**Possible Causes**:
+- Insufficient power draw
+- USB enumeration issues
+- Driver problems
+- Hardware conflicts
+
+**Solutions**:
+1. **Check Power**: Verify device power requirements don't exceed USB limits
+2. **Test Different Port**: Try connecting to different USB port
+3. **Check Kernel Logs**: `dmesg | grep -i usb` to see USB activity
+4. **Install Drivers**: For RealSense cameras: `sudo apt install ros-humble-realsense2-camera`
+5. **Reset USB Controller**: `sudo modprobe -r xhci_hcd && sudo modprobe xhci_hcd`
+
+#### Problem: Network Connectivity Issues
+**Symptoms**: Wi-Fi or Ethernet connection fails or drops
+**Possible Causes**:
+- Driver issues
+- Network configuration problems
+- Hardware interference
+- Power management settings
+
+**Solutions**:
+1. **Check Drivers**: Verify network drivers are loaded: `lspci | grep -i network`
+2. **Wi-Fi Reset**: `sudo ip link set wlp1s0 down && sudo ip link set wlp1s0 up`
+3. **Ethernet Test**: Try with direct connection to router
+4. **Power Management**: Disable Wi-Fi power save: `sudo iwconfig wlp1s0 power off`
+5. **Network Manager**: Restart with `sudo systemctl restart NetworkManager`
+
+### ROS 2 Integration Issues
+
+#### Problem: Jetson Not Communicating with Host PC
+**Symptoms**: ROS 2 nodes on Jetson not visible from PC or vice versa
+**Possible Causes**:
+- Network configuration issues
+- Firewall blocking communication
+- Incorrect ROS_DOMAIN_ID
+- DNS resolution problems
+
+**Solutions**:
+1. **Network Check**: Verify both devices on same network: `ip addr show`
+2. **Firewall**: Temporarily disable firewall: `sudo ufw disable`
+3. **Domain ID**: Ensure both devices use same domain: `export ROS_DOMAIN_ID=1`
+4. **Multicast**: Verify multicast traffic allowed: `ros2 topic list`
+5. **Environment**: Source ROS 2 on both devices: `source /opt/ros/humble/setup.bash`
+
+## Unitree G1 Troubleshooting
+
+### Connection and Communication Issues
+
+#### Problem: Robot Not Responding to Commands
+**Symptoms**: Robot doesn't execute commands sent via SDK or interface
+**Possible Causes**:
+- Network connectivity issues
+- Wrong IP address configuration
+- Firewall blocking communication
+- Robot safety mode engaged
+
+**Solutions**:
+1. **IP Verification**: Check robot IP with `ping 192.168.123.161` (default)
+2. **Network Test**: Verify connectivity with `telnet [ROBOT_IP] 8080`
+3. **Safety Check**: Verify robot is in unlocked mode (orange light)
+4. **Firewall**: Temporarily disable firewall on both devices
+5. **SDK Initialization**: Ensure proper initialization sequence in code
+
+#### Problem: Robot Falls or Loses Balance
+**Symptoms**: Robot falls during operation or shows instability
+**Possible Causes**:
+- Incorrect calibration
+- Uneven terrain
+- Payload too heavy
+- Software control issues
+
+**Solutions**:
+1. **Calibration**: Recalibrate IMU and encoders following manual
+2. **Surface**: Ensure robot is on flat, stable surface
+3. **Payload**: Verify weight is within 10kg limit and properly distributed
+4. **Control Parameters**: Adjust gait and balance parameters if needed
+5. **Safety**: Always have safety spotter when robot is active
+
+### Battery and Power Issues
+
+#### Problem: Short Battery Life
+**Symptoms**: Battery depletes much faster than expected (less than 30 minutes)
+**Possible Causes**:
+- Heavy computational loads
+- High actuator stress
+- Battery degradation
+- Inefficient control algorithms
+
+**Solutions**:
+1. **Power Monitoring**: Monitor power consumption during operation
+2. **Efficiency**: Optimize control algorithms to reduce unnecessary movements
+3. **Standby**: Use standby modes when robot is not actively moving
+4. **Battery Health**: Check battery cycles and replace if degraded
+5. **Thermal**: Ensure proper cooling to prevent thermal shutdown
+
+## Intel RealSense D435i Troubleshooting
+
+### Detection and Recognition Issues
+
+#### Problem: Camera Not Detected by System
+**Symptoms**: Camera doesn't appear in system, no devices found
+**Possible Causes**:
+- USB power/speed issues
+- Driver conflicts
+- Firmware problems
+- Hardware damage
+
+**Solutions**:
+1. **USB Connection**: Use shorter, high-quality USB 3.0 cable
+2. **Direct Connection**: Connect directly to computer, not through hub
+3. **Reinstall Drivers**: `sudo apt purge librealsense2-*` then reinstall
+4. **Firmware Update**: Use RealSense Viewer to update firmware
+5. **Kernel Parameters**: Add `modprobe.blacklist=nouveau` to GRUB if using NVIDIA GPU
+
+#### Problem: Poor Depth Quality or Inconsistent Data
+**Symptoms**: Depth data is noisy, inconsistent, or inaccurate
+**Possible Causes**:
+- Lighting conditions
+- Reflective surfaces
+- Calibration issues
+- Hardware misalignment
+
+**Solutions**:
+1. **Lighting**: Ensure adequate but not overly bright lighting
+2. **Surfaces**: Avoid shiny or transparent objects if possible
+3. **Calibration**: Recalibrate camera using calibration tools
+4. **Settings**: Adjust exposure and gain settings in RealSense Viewer
+5. **Filters**: Apply spatial and temporal filters in software
+
+### ROS 2 Integration Issues
+
+#### Problem: Camera Not Publishing to ROS 2 Topics
+**Symptoms**: Camera connected but no data on ROS 2 topics
+**Possible Causes**:
+- ROS 2 package not running
+- Parameter configuration issues
+- Missing dependencies
+- Node startup problems
+
+**Solutions**:
+1. **Launch Node**: `ros2 launch realsense2_camera rs_launch.py`
+2. **Check Topics**: `ros2 topic list | grep camera`
+3. **Verify Installation**: `sudo apt install ros-humble-realsense2-camera`
+4. **Parameters**: Check parameter configuration in launch file
+5. **Logs**: Check output with `ros2 run rqt_console rqt_console`
+
+## Development Computer Troubleshooting
+
+### Isaac Sim Installation Issues
+
+#### Problem: Isaac Sim Won't Launch
+**Symptoms**: Isaac Sim fails to start or crashes immediately
+**Possible Causes**:
+- GPU driver incompatibility
+- CUDA version mismatch
+- Insufficient VRAM
+- Missing dependencies
+
+**Solutions**:
+1. **Driver Check**: Verify NVIDIA drivers: `nvidia-smi`
+2. **CUDA Version**: Ensure CUDA 12.0+ is installed: `nvcc --version`
+3. **VRAM**: Verify sufficient GPU memory (minimum 12GB for Isaac Sim)
+4. **Dependencies**: Install all required libraries: `sudo apt install build-essential`
+5. **Display**: Ensure display is connected to NVIDIA GPU, not integrated graphics
+
+#### Problem: Poor Simulation Performance
+**Symptoms**: Low frame rate, lag, or stuttering in Isaac Sim
+**Possible Causes**:
+- Insufficient system resources
+- Graphics settings too high
+- Complex scene overload
+- Background processes
+
+**Solutions**:
+1. **Graphics Settings**: Reduce viewport quality in Isaac Sim
+2. **Scene Complexity**: Simplify scene temporarily to isolate issue
+3. **Resources**: Close other GPU-intensive applications
+4. **VRAM**: Monitor GPU memory usage: `nvidia-smi`
+5. **Physics**: Reduce physics substeps in simulation settings
+
+### ROS 2 Environment Issues
+
+#### Problem: ROS 2 Commands Not Found
+**Symptoms**: `ros2` command returns "command not found"
+**Possible Causes**:
+- ROS 2 not installed
+- Environment not sourced
+- Installation path incorrect
+- Shell configuration issues
+
+**Solutions**:
+1. **Installation**: Verify ROS 2 installation: `ls /opt/ros/humble/`
+2. **Sourcing**: Source environment: `source /opt/ros/humble/setup.bash`
+3. **Shell Profile**: Add sourcing to shell profile: `echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc`
+4. **Permissions**: Ensure correct permissions on ROS 2 installation
+5. **Distribution**: Verify correct ROS 2 distribution is installed
+
+## Network Troubleshooting
+
+### General Network Issues
+
+#### Problem: Intermittent Network Disconnections
+**Symptoms**: Network connection drops randomly during operation
+**Possible Causes**:
+- Unstable Wi-Fi signal
+- Network congestion
+- Power management settings
+- Router configuration
+
+**Solutions**:
+1. **Wi-Fi Signal**: Move closer to router or use Ethernet
+2. **Channel**: Change Wi-Fi channel to less congested one
+3. **Power Management**: Disable network power management
+4. **Router**: Check for firmware updates
+5. **Quality of Service**: Configure router to prioritize robot traffic
+
+#### Problem: High Latency in Robot Control
+**Symptoms**: Noticeable delay between sending command and robot response
+**Possible Causes**:
+- Network congestion
+- Wireless interference
+- Processing delays
+- Bandwidth limitations
+
+**Solutions**:
+1. **Connection**: Use wired Ethernet when possible
+2. **Bandwidth**: Ensure sufficient bandwidth for robot communication
+3. **Processing**: Optimize code to reduce processing delays
+4. **Frequency**: Adjust control frequency to match network capabilities
+5. **Buffering**: Implement appropriate buffering strategies
+
+## Systematic Hardware Testing
+
+### Pre-Operation Checklist
+Before beginning any hardware operation, verify:
+
+**For Jetson Orin Nano Super**:
+- [ ] Power LED is on (blue or orange)
+- [ ] Fan is spinning (if equipped)
+- [ ] MicroSD card is properly seated
+- [ ] All ports are free of debris
+- [ ] System boots to desktop successfully
+
+**For Unitree G1**:
+- [ ] All joints move freely without obstruction
+- [ ] Battery charge level is adequate (>80% recommended)
+- [ ] Network connection is established
+- [ ] Safety lock is disengaged (orange light)
+- [ ] Surrounding area is clear of obstacles
+
+**For Intel RealSense D435i**:
+- [ ] Camera is securely mounted
+- [ ] USB connection is firm
+- [ ] No physical damage to cables
+- [ ] Lens is clean and unobstructed
+- [ ] Infrared emitters are visible (in dark room)
+
+### Diagnostic Commands
+
+#### System Information Commands
+```bash
+# System resources
+free -h  # Memory usage
+df -h    # Disk usage
+top      # Process monitoring
+
+# Hardware detection
+lspci | grep -i nvidia  # GPU detection
+lsusb | grep -i intel   # USB devices
+dmesg | grep -i usb     # USB messages
+
+# Network information
+ip addr show            # Network interfaces
+ping -c 4 google.com    # Internet connectivity
+```
+
+#### ROS 2 Diagnostic Commands
+```bash
+# ROS 2 environment
+echo $ROS_DISTRO         # Verify ROS distribution
+ros2 topic list          # Active topics
+ros2 node list           # Active nodes
+ros2 service list        # Available services
+
+# ROS 2 performance
+ros2 topic hz /topic_name # Topic frequency
+ros2 topic echo /topic_name --field field_name # Topic data
+```
+
+## Preventive Maintenance
+
+### Regular Checks
+- **Weekly**: Verify all connections are secure
+- **Monthly**: Update firmware and software
+- **Quarterly**: Clean dust from fans and vents
+- **Annually**: Replace batteries and consumables
+
+### Documentation
+- Keep a log of all issues and solutions
+- Document system configurations
+- Track component lifespans
+- Record successful troubleshooting steps
+
+## Emergency Procedures
+
+### Safety Protocols
+- **Robot Movement**: Always maintain clear space around moving robot
+- **Power Issues**: Immediately disconnect power if smoke or burning smell occurs
+- **Overheating**: Stop operations if temperatures exceed safe ranges
+- **Emergency Stop**: Know location of emergency stop procedures for all equipment
+
+### Data Safety
+- **Regular Backups**: Back up important configurations and data
+- **Version Control**: Use git for code and configuration management
+- **Documentation**: Keep configuration documentation current
+
+## Getting Additional Support
+
+### Community Resources
+- **NVIDIA Developer Forums**: For Jetson and Isaac Sim issues
+- **ROS Answers**: For ROS 2 specific questions
+- **Unitree Community**: For G1 robot support
+- **Intel RealSense Community**: For camera-specific issues
+
+### When to Seek Help
+- Problems persist after following troubleshooting guide
+- Issues involve potential hardware damage
+- Safety concerns arise during operation
+- Complex integration problems beyond basic troubleshooting
+
+## Summary
+
+This troubleshooting guide covers the most common issues encountered with the recommended hardware for the Physical AI & Humanoid Robotics course. Remember to approach problems systematically, document your steps, and escalate to community resources when needed. Regular preventive maintenance and following proper safety protocols will minimize issues and extend equipment lifespan.
+
+Always prioritize safety over speed when troubleshooting hardware, and don't hesitate to seek help from the community when facing complex issues.
