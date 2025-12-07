@@ -9,10 +9,10 @@ const config = {
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://panaversity.github.io',
+  url: 'https://physical-ai-humanoid-textbook.vercel.app',
   // Set the /<baseUrl>/ pathname under which your site is served
-  // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/physical-ai-humanoid-textbook',
+  // For Vercel deployment, use '/'
+  baseUrl: '/',
 
   // GitHub pages deployment config.
   organizationName: 'Panaversity', // Usually your GitHub org/user name.
@@ -39,7 +39,7 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/abdulrahman-58/Physical-AI-Humanoid-Robotics-Course-Textbook.git/edit/main/',
+            'https://github.com/abdulrahman-58/Physical-AI-Humanoid-Robotics-Course-Textbook/edit/main/',
           // Exclude template files from documentation build
           exclude: ['templates/**'],
         },
@@ -70,7 +70,7 @@ const config = {
             label: 'Textbook',
           },
           {
-            href: 'https://github.com/abdulrahman-58/Physical-AI-Humanoid-Robotics-Course-Textbook.git',
+            href: 'https://github.com/abdulrahman-58/Physical-AI-Humanoid-Robotics-Course-Textbook',
             label: 'GitHub',
             position: 'right',
           },
@@ -110,7 +110,7 @@ const config = {
             items: [
               {
                 label: 'GitHub',
-                href: 'https://github.com/abdulrahman-58/Physical-AI-Humanoid-Robotics-Course-Textbook.git',
+                href: 'https://github.com/abdulrahman-58/Physical-AI-Humanoid-Robotics-Course-Textbook',
               },
             ],
           },

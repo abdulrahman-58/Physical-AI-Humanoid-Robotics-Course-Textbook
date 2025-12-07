@@ -10,7 +10,10 @@
       "Bash(pwsh -ExecutionPolicy Bypass -File \".specify/scripts/powershell/check-prerequisites.ps1\" -Json -RequireTasks -IncludeTasks)",
       "Bash(npx docusaurus build)",
       "Bash(ls -la src/pages/chatbot*)",
-      "Bash(find docs/ -name \"*.mdx\" -exec basename {} ;)"
+      "Bash(find docs/ -name \"*.mdx\" -exec basename {} ;)",
+      "Bash(npm run build)",
+      "Bash(npx serve build)",
+      "Bash(npm run serve)"
     ],
     "deny": [],
     "ask": []
