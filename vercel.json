@@ -13,5 +13,14 @@
       "src": "/(.*)",
       "dest": "/index.html"
     }
+  ],
+  
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/$1"
+    }
   ]
 }
+
+
