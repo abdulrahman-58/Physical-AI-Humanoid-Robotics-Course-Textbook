@@ -14,10 +14,6 @@ const config = {
   // For Vercel deployment, use '/'
   baseUrl: '/',
 
-  // GitHub pages deployment config.
-  organizationName: 'Panaversity', // Usually your GitHub org/user name.
-  projectName: 'physical-ai-humanoid-textbook', // Usually your repo name.
-
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
 

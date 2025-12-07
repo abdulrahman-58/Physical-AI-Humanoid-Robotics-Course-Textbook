@@ -61,7 +61,7 @@ pip install rclpy transforms3d numpy matplotlib
 ### 4. Clone and Set up Textbook Repository
 ```bash
 # Clone the textbook repository
-git clone https://github.com/[organization]/physical-ai-humanoid-textbook.git
+git clone https://github.com/abdulrahman-58/Physical-AI-Humanoid-Robotics-Course-Textbook.git
 cd physical-ai-humanoid-textbook
 
 # Install Docusaurus dependencies
