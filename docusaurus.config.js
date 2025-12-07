@@ -26,7 +26,7 @@ const config = {
   // may want to replace "en" with "zh-Hans".
   i18n: {
     defaultLocale: 'en',
-    locales: ['en', 'ur'], // Adding Urdu for translation capability
+    locales: ['en'], // Removed Urdu due to page not found issues
   },
 
   presets: [
@@ -39,7 +39,9 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/Panaversity/physical-ai-humanoid-textbook/edit/main/',
+            'https://github.com/abdulrahman-58/Physical-AI-Humanoid-Robotics-Course-Textbook.git/edit/main/',
+          // Exclude template files from documentation build
+          exclude: ['templates/**'],
         },
         blog: false, // Disable blog for textbook
         theme: {
@@ -68,11 +70,7 @@ const config = {
             label: 'Textbook',
           },
           {
-            type: 'localeDropdown',
-            position: 'right',
-          },
-          {
-            href: 'https://github.com/Panaversity/physical-ai-humanoid-textbook',
+            href: 'https://github.com/abdulrahman-58/Physical-AI-Humanoid-Robotics-Course-Textbook.git',
             label: 'GitHub',
             position: 'right',
           },
@@ -91,11 +89,19 @@ const config = {
             ],
           },
           {
-            title: 'Community',
+            title: 'Social',
             items: [
               {
-                label: 'Panaversity',
-                href: 'https://panaversity.com',
+                label: 'LinkedIn',
+                href: 'https://www.linkedin.com/in/abdul-rahman-azam-09155328b/',
+              },
+              {
+                label: 'Twitter (X)',
+                href: 'https://x.com/AbdulRahman_Az5/',
+              },
+              {
+                label: 'Discord',
+                href: 'https://discordapp.com/users/abdulrahmanazam.58',
               },
             ],
           },
@@ -104,17 +110,17 @@ const config = {
             items: [
               {
                 label: 'GitHub',
-                href: 'https://github.com/Panaversity/physical-ai-humanoid-textbook',
+                href: 'https://github.com/abdulrahman-58/Physical-AI-Humanoid-Robotics-Course-Textbook.git',
               },
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} Panaversity. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Abdul Rahman Azam ♥. Built with Docusaurus.`,
       },
       prism: {
         theme: require('prism-react-renderer').themes.github,
         darkTheme: require('prism-react-renderer').themes.dracula,
-        additionalLanguages: ['python', 'bash', 'json', 'yaml', 'urdf'],
+        additionalLanguages: ['python', 'bash', 'json', 'yaml'],
       },
     }),
 };

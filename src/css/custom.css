@@ -14,36 +14,69 @@
   --ifm-color-primary-lighter: #32d8b4;
   --ifm-color-primary-lightest: #4fddbf;
   --ifm-code-font-size: 95%;
+
+  /* Custom colors for light mode */
+  --difficulty-beginner-bg: #d4edda;
+  --difficulty-beginner-color: #155724;
+  --difficulty-intermediate-bg: #fff3cd;
+  --difficulty-intermediate-color: #856404;
+  --difficulty-advanced-bg: #f8d7da;
+  --difficulty-advanced-color: #721c24;
+  --lab-exercise-border: #3578e5;
+  --lab-exercise-bg: #f8f9fa;
+  --lab-title-color: #3578e5;
+  --code-example-bg: #f6f8fa;
+  --personalization-panel-bg: #e9ecef;
+  --personalization-panel-border: #ced4da;
+  --personalization-title-color: #495057;
+  --progress-bar-bg: #e9ecef;
+}
+
+[data-theme='dark'] {
+  --difficulty-beginner-bg: #0d3820;
+  --difficulty-beginner-color: #7ec699;
+  --difficulty-intermediate-bg: #6b5a18;
+  --difficulty-intermediate-color: #ffeaa7;
+  --difficulty-advanced-bg: #5a2933;
+  --difficulty-advanced-color: #f1a8b9;
+  --lab-exercise-border: #5dade2;
+  --lab-exercise-bg: #1a1f24;
+  --lab-title-color: #5dade2;
+  --code-example-bg: #1e2226;
+  --personalization-panel-bg: #21272d;
+  --personalization-panel-border: #404852;
+  --personalization-title-color: #adb5bd;
+  --progress-bar-bg: #2d3746;
 }
 
 /* Textbook-specific styles */
 .difficulty-beginner {
-  background-color: #d4edda;
-  color: #155724;
+  background-color: var(--difficulty-beginner-bg);
+  color: var(--difficulty-beginner-color);
   padding: 2px 6px;
   border-radius: 4px;
   font-weight: bold;
 }
 
 .difficulty-intermediate {
-  background-color: #fff3cd;
-  color: #856404;
+  background-color: var(--difficulty-intermediate-bg);
+  color: var(--difficulty-intermediate-color);
   padding: 2px 6px;
   border-radius: 4px;
   font-weight: bold;
 }
 
 .difficulty-advanced {
-  background-color: #f8d7da;
-  color: #721c24;
+  background-color: var(--difficulty-advanced-bg);
+  color: var(--difficulty-advanced-color);
   padding: 2px 6px;
   border-radius: 4px;
   font-weight: bold;
 }
 
 .lab-exercise {
-  border-left: 4px solid #3578e5;
-  background-color: #f8f9fa;
+  border-left: 4px solid var(--lab-exercise-border);
+  background-color: var(--lab-exercise-bg);
   padding: 15px;
   margin: 15px 0;
   border-radius: 0 4px 4px 0;
@@ -53,11 +86,11 @@
   font-weight: bold;
   font-size: 1.1em;
   margin-bottom: 10px;
-  color: #3578e5;
+  color: var(--lab-title-color);
 }
 
 .code-example {
-  background-color: #f6f8fa;
+  background-color: var(--code-example-bg);
   border-radius: 6px;
   padding: 16px;
   margin: 16px 0;
@@ -66,8 +99,8 @@
 
 /* Personalization panel */
 .personalization-panel {
-  background-color: #e9ecef;
-  border: 1px solid #ced4da;
+  background-color: var(--personalization-panel-bg);
+  border: 1px solid var(--personalization-panel-border);
   border-radius: 6px;
   padding: 15px;
   margin: 15px 0;
@@ -76,13 +109,13 @@
 .personalization-title {
   font-weight: bold;
   margin-bottom: 10px;
-  color: #495057;
+  color: var(--personalization-title-color);
 }
 
 /* Progress tracking */
 .progress-bar {
   height: 20px;
-  background-color: #e9ecef;
+  background-color: var(--progress-bar-bg);
   border-radius: 10px;
   overflow: hidden;
   margin: 10px 0;

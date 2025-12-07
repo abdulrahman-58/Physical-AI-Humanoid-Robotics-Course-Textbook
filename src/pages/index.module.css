@@ -1,0 +1,200 @@
+/**
+ * CSS files with the .module.css suffix will be treated as CSS modules
+ * locally scoped CSS by default.
+ */
+
+.heroBanner {
+  padding: 4rem 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #1a56db 0%, #25c2a0 100%);
+  color: white;
+}
+
+[data-theme='dark'] .heroBanner {
+  background: linear-gradient(135deg, #0f3a6e 0%, #1a7a63 100%);
+  color: #f0f0f0;
+}
+
+@media screen and (max-width: 996px) {
+  .heroBanner {
+    padding: 2rem;
+  }
+}
+
+.heroContent {
+  flex: 1;
+  max-width: 50%;
+  text-align: left;
+}
+
+@media screen and (max-width: 996px) {
+  .heroContent {
+    max-width: 100%;
+    text-align: center;
+  }
+}
+
+.mainTitle {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.mainSubtitle {
+  font-size: 1.3rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+}
+
+.buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+@media screen and (max-width: 996px) {
+  .buttons {
+    justify-content: center;
+    flex-direction: column;
+  }
+}
+
+.getStartedButton {
+  background-color: white !important;
+  color: #1a56db !important;
+  padding: 1rem 2rem !important;
+  border-radius: 8px !important;
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease;
+}
+
+.getStartedButton:hover {
+  background-color: #f0f0f0 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme='dark'] .getStartedButton {
+  background-color: #e0e0e0 !important;
+  color: #0f3a6e !important;
+}
+
+[data-theme='dark'] .getStartedButton:hover {
+  background-color: #d0d0d0 !important;
+}
+
+.exploreButton {
+  background-color: transparent !important;
+  color: white !important;
+  border: 2px solid white !important;
+  padding: 1rem 2rem !important;
+  border-radius: 8px !important;
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease;
+}
+
+.exploreButton:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme='dark'] .exploreButton {
+  color: #f0f0f0 !important;
+  border: 2px solid #f0f0f0 !important;
+}
+
+[data-theme='dark'] .exploreButton:hover {
+  background-color: rgba(240, 240, 240, 0.2) !important;
+}
+
+.heroImage {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 50%;
+}
+
+.heroImage img {
+  max-width: 100%;
+  max-height: 300px;
+  filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.2));
+}
+
+@media screen and (max-width: 996px) {
+  .heroBanner {
+    padding: 2rem 0;
+  }
+
+  .container {
+    flex-direction: column;
+  }
+
+  .heroContent {
+    max-width: 100%;
+  }
+}
+
+.features {
+  padding: 5rem 0;
+  background-color: #f9fafb;
+}
+
+[data-theme='dark'] .features {
+  background-color: #121212;
+}
+
+.featureCard {
+  padding: 2rem;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 12px;
+  background-color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1rem;
+}
+
+[data-theme='dark'] .featureCard {
+  background-color: #1e1e1e;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  color: #f0f0f0;
+}
+
+.featureCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme='dark'] .featureCard:hover {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+.featureTitle {
+  color: #1a56db;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+[data-theme='dark'] .featureTitle {
+  color: #64b5f6;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+@media screen and (max-width: 996px) {
+  .container {
+    flex-direction: column;
+  }
+}

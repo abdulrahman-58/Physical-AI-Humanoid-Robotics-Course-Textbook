@@ -1,0 +1,14 @@
+{
+  "title": {
+    "message": "جسمانی AI کتاب",
+    "description": "Navbar title"
+  },
+  "item.label.Textbook": {
+    "message": "کتاب",
+    "description": "Navbar item with label Textbook"
+  },
+  "item.label.GitHub": {
+    "message": "گیتھب",
+    "description": "Navbar item with label GitHub"
+  }
+}

@@ -8,8 +8,8 @@ const sidebars = {
       label: 'Introduction',
       items: [
         'intro/index',
-        'intro/hardware-setup',
-        'intro/getting-started'
+        'intro/hardware-setup'
+        // 'intro/getting-started' // This file doesn't exist
       ],
       collapsed: false
     },
@@ -18,6 +18,7 @@ const sidebars = {
       label: 'Chapter 1: ROS 2 Basics',
       items: [
         'chapter-1/index',
+        'chapter-1/learning-objectives', // Added the actual file that exists
         'chapter-1/ros2-basics',
         'chapter-1/nodes-topics-services',
         'chapter-1/lab-1'
@@ -37,65 +38,71 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: 'Chapter 3: Robot Control Theory',
+      label: 'Instructor Guide',
       items: [
-        'chapter-3/index',
-        'chapter-3/robot-control-theory',
-        'chapter-3/basic-movements',
-        'chapter-3/lab-3'
+        'instructor-guide/chapter2-teaching-guide'
       ],
-      collapsed: false
+      collapsed: true
     },
     {
       type: 'category',
-      label: 'Chapter 4: Perception Systems',
+      label: 'Validation',
       items: [
-        'chapter-4/index',
-        'chapter-4/perception-systems',
-        'chapter-4/sensor-integration',
-        'chapter-4/lab-4'
+        'validation/chapter2-validation',
+        'validation/hardware-validation'
       ],
-      collapsed: false
+      collapsed: true
     },
     {
       type: 'category',
-      label: 'Chapter 5: Vision-Language-Action',
+      label: 'Testing',
       items: [
-        'chapter-5/index',
-        'chapter-5/vision-language-action',
-        'chapter-5/llm-integration',
-        'chapter-5/lab-5'
+        'testing/week1-validation',
+        'testing/personalization-testing'
       ],
-      collapsed: false
+      collapsed: true
     },
     {
       type: 'category',
-      label: 'Chapter 6: Humanoid Locomotion',
+      label: 'Personalization',
       items: [
-        'chapter-6/index',
-        'chapter-6/humanoid-locomotion',
-        'chapter-6/walking-algorithms',
-        'chapter-6/lab-6'
+        'personalization/api-spec'
       ],
-      collapsed: false
+      collapsed: true
     },
     {
       type: 'category',
-      label: 'Chapter 7: Capstone Project',
+      label: 'Research',
       items: [
-        'chapter-7/index',
-        'chapter-7/capstone-project',
-        'chapter-7/autonomous-behaviors',
-        'chapter-7/final-demo'
+        'research/unitree-g1-2025',
+        'research/realsense-d435i-2025',
+        'research/jetson-orin-nano-super-2025'
       ],
-      collapsed: false
+      collapsed: true
+    },
+    {
+      type: 'category',
+      label: 'Budget Options',
+      items: [
+        'budget-options/budget-hardware-guide'
+      ],
+      collapsed: true
+    },
+    {
+      type: 'category',
+      label: 'Curriculum',
+      items: [
+        'curriculum-mapping',
+        'content-guidelines'
+      ],
+      collapsed: true
     },
     {
       type: 'category',
       label: 'Appendix',
       items: [
         'appendix/troubleshooting',
-        'appendix/reference',
+        'appendix/alternative-hardware', // Changed from 'reference' to the actual existing file
         'appendix/hardware-specs'
       ],
       collapsed: true
