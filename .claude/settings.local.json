@@ -13,7 +13,8 @@
       "Bash(find docs/ -name \"*.mdx\" -exec basename {} ;)",
       "Bash(npm run build)",
       "Bash(npx serve build)",
-      "Bash(npm run serve)"
+      "Bash(npm run serve)",
+      "Bash(cat docusaurus.config.js)"
     ],
     "deny": [],
     "ask": []
