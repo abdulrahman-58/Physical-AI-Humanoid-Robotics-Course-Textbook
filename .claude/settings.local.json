@@ -1,22 +1,16 @@
 {
   "permissions": {
     "allow": [
-      "Bash(git fetch --all --prune)",
-      "Bash(powershell -ExecutionPolicy Bypass -File \".specify/scripts/powershell/create-new-feature.ps1\" -Json -Number 1 -ShortName \"textbook-physical-ai\" -FeatureDescription \"Physical AI & Humanoid Robotics – Official Panaversity Capstone Textbook\n\nTarget audience: \nPanaversity/GIAIC/PIAIC students taking the 13-week Physical AI & Humanoid Robotics capstone quarter\n\nFocus: \nFrom zero to fully autonomous simulated humanoid robot using ROS 2 + Isaac Sim + Vision-Language-Action models\n\nSuccess criteria:\n- 100% matches the official weekly breakdown (Weeks 1–13) and 4 modules provided\n- Every chapter contains runnable, tested ROS 2 Python code (rclpy) and URDF snippets\n- Capstone project fully explained step-by-step with voice → LLM → ROS 2 action flow\n- Hardware section includes exact 2025 prices and model numbers (Jetson Orin Nano Super $249, Unitree G1, RealSense D435i, etc.)\n- Ready for RAG chatbot, personalization buttons, and one-click Urdu translation\n- Student with RTX 4070 Ti + Jetson kit can follow every single lab end-to-end\n\nConstraints:\n- Output format: Pure Docusaurus-ready MDX (Spec-Kit Plus compliant)\n- 7 chapters + appendix exactly as per the official curriculum\n- All facts, versions, prices, ROS distro (Kilted Kaiju), Isaac Sim features accurate to December 2025\n- Code blocks must be copy-paste executable on Ubuntu 22.04\n\nNot building:\n- Full source code repository (only textbook + snippets)\n- The actual RAG chatbot backend (only content prepared for it)\n- Authentication system\n- Live demos or videos\n\nDeliverable: One complete, deployable AI-native textbook that becomes the official Panaversity Physical AI course book.\")",
-      "Bash(powershell -ExecutionPolicy Bypass -File \".specify/scripts/powershell/setup-plan.ps1\" -Json)",
-      "Bash(powershell -ExecutionPolicy Bypass -File \".specify/scripts/powershell/update-agent-context.ps1\" -AgentType claude)",
-      "Bash(powershell -ExecutionPolicy Bypass -File \".specify/scripts/powershell/check-prerequisites.ps1\" -Json)",
-      "Bash(dir C:HackathonPhysical-AI-Humanoid-Robotics-Course-Textbookspecs001-textbook-physical-aicontracts)",
-      "Bash(powershell -ExecutionPolicy Bypass -File \".specify/scripts/powershell/check-prerequisites.ps1\" -Json -RequireTasks -IncludeTasks)",
-      "Bash(git rev-parse --git-dir)",
-      "Bash(npm init docusaurus@latest website textbook --typescript)",
-      "Bash(npx create-docusaurus@latest website textbook classic)",
-      "Bash(node --version)",
-      "Bash(npm install --save-dev @docusaurus/core@latest)",
-      "Bash(npm create docusaurus@latest textbook classic --typescript)",
-      "Bash(npm create docusaurus@latest textbook classic)",
-      "Bash(npm init)",
-      "Bash(dir \"C:\\Hackathon\\Physical-AI-Humanoid-Robotics-Course-Textbook\\docs\\chapter-1\"\")"
+      "Bash(npm run start)",
+      "Bash(npm install prism-react-renderer)",
+      "Bash(kill -9 0f2aec)",
+      "Bash(npx kill-port 3000)",
+      "Bash(npm start)",
+      "Bash(node -e \"console.log(''Node is available'');\")",
+      "Bash(pwsh -ExecutionPolicy Bypass -File \".specify/scripts/powershell/check-prerequisites.ps1\" -Json -RequireTasks -IncludeTasks)",
+      "Bash(npx docusaurus build)",
+      "Bash(ls -la src/pages/chatbot*)",
+      "Bash(find docs/ -name \"*.mdx\" -exec basename {} ;)"
     ],
     "deny": [],
     "ask": []

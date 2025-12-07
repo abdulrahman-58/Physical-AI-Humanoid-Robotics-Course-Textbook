@@ -1,0 +1,30 @@
+{
+  "theme.NotFound.title": {
+    "message": "صفحہ نہیں ملا",
+    "description": "The title of the 404 page"
+  },
+  "theme.NotFound.p1": {
+    "message": "ہمیں وہ صفحہ نہیں ملا جو آپ تلاش کر رہے تھے۔",
+    "description": "The first paragraph of the 404 page"
+  },
+  "theme.NotFound.p2": {
+    "message": "براہ کرم URL دوبارہ چیک کریں، یا ہوم پیج پر واپس جانے کے لیے نیچے کے بٹن کو دبائیں۔",
+    "description": "The second paragraph of the 404 page"
+  },
+  "theme.NotFound.404": {
+    "message": "404",
+    "description": "The 404 error code"
+  },
+  "theme.AnnouncementBar.closeButtonAriaLabel": {
+    "message": "بند کریں",
+    "description": "The ARIA label for the announcement bar close button"
+  },
+  "theme.blog.post.readingTime.plurals": {
+    "message": "ایک منٹ|{readingTime} منٹ",
+    "description": "Pluralized label for \"{readingTime} min read\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
+  },
+  "theme.tags.tagsPageTitle": {
+    "message": "ٹیگز",
+    "description": "The title of the tag list page"
+  }
+}
