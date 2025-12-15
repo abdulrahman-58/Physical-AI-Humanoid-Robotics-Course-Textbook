@@ -39,7 +39,9 @@
       "Bash(git add vercel.json start-dev-server.bat history/prompts/general/001-git-workflow-commit-pull-request.general.prompt.md)",
       "Bash(git clean -f nul)",
       "Bash(git add .gitignore)",
-      "Bash(git commit -m \"Add Windows system files to .gitignore\n\n- Ignore nul and temp_nul_file to prevent git issues on Windows\n- These are system files that should not be tracked in the repository\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\")"
+      "Bash(git commit -m \"Add Windows system files to .gitignore\n\n- Ignore nul and temp_nul_file to prevent git issues on Windows\n- These are system files that should not be tracked in the repository\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\")",
+      "Bash(git add README.md)",
+      "Bash(git commit -m \"Force rebuild with correct Vercel configuration\n\n- Ensure baseUrl is correctly set to ''/'' for Vercel deployment\n- This should resolve the UI loading issue on Vercel\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\")"
     ],
     "deny": [],
     "ask": []
