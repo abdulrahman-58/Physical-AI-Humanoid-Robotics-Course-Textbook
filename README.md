@@ -54,3 +54,5 @@ The textbook includes adaptive learning features:
 ## Contributing
 
 This textbook is maintained as part of the Panaversity Physical AI curriculum. Contributions are welcome following the project's constitution and guidelines.
+
+Last updated: December 15, 2025
