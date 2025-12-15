@@ -24,7 +24,22 @@
       "Bash(npx kill-port 3001)",
       "Bash(npx kill-port 3002)",
       "Bash(npx kill-port 3003)",
-      "Bash(npx docusaurus start --port 3000)"
+      "Bash(npx docusaurus start --port 3000)",
+      "Bash(taskkill /f /im node.exe)",
+      "Bash(del nul)",
+      "Bash(git add vercel.json start-dev-server.bat)",
+      "Bash(del temp_nul_file)",
+      "Bash(git add .)",
+      "Bash(git commit -m \"Update vercel.json for proper asset handling and add dev server script\n\n- Enhanced vercel.json with proper asset routing and cache control\n- Added start-dev-server.bat for easy local development\n- Fixed routing issues that caused UI display problems on Vercel\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\")",
+      "Bash(git push origin main)",
+      "Bash(git --version)",
+      "Bash(git rev-parse --is-inside-work-tree)",
+      "Bash(git push origin main --dry-run)",
+      "Bash(git add -A)",
+      "Bash(git add vercel.json start-dev-server.bat history/prompts/general/001-git-workflow-commit-pull-request.general.prompt.md)",
+      "Bash(git clean -f nul)",
+      "Bash(git add .gitignore)",
+      "Bash(git commit -m \"Add Windows system files to .gitignore\n\n- Ignore nul and temp_nul_file to prevent git issues on Windows\n- These are system files that should not be tracked in the repository\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\")"
     ],
     "deny": [],
     "ask": []
