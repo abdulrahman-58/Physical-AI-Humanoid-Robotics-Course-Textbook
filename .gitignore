@@ -86,3 +86,4 @@ log/
 # Windows system files
 nul
 temp_nul_file
+.vercel
