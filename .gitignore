@@ -82,3 +82,7 @@ build_*/
 install_*/
 log/
 .deps/
+
+# Windows system files
+nul
+temp_nul_file
